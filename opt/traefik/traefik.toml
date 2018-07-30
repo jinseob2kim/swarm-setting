@@ -1,0 +1,41 @@
+defaultEntryPoints = ["http", "https"]
+
+[api]
+dashboard = true
+address = ":8080"
+  #[web.auth.basic]
+  #users = ["admin:$apr1$EhmZOKGp$oahMdaltwVrKzXqkV2KI8."]
+  
+  
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]  
+
+
+    
+[acme]
+email = "secondmath85@gmail.com"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+onDemand = false
+
+
+#[acme.httpChallenge]
+#  entryPoint = "http"
+
+## *.anpanman.co.kr & anpanman.co.kr should be in DNS "A": digitalocean
+[acme.dnsChallenge]
+  provider = "digitalocean"
+  delayBeforeCheck = 0 
+
+
+## Wildtype domain isn't possible without a dnsChallenge
+#[[acme.domains]]
+#  main = "*.anpanman.co.kr"
+#  sans = ["anpanman.co.kr"]
