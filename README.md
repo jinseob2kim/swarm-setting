@@ -101,7 +101,7 @@ docker network create --driver=overlay traefik-net
 
 # For Let's Encrypt
 docker-machine ssh manager1 "touch acme.json && chmod 600 acme.json"
-docker-machine ssh manager1 "wget -O traefik.toml  https://www.dropbox.com/s/71iow2r00o2nv5u/traefik.toml?dl=0"
+docker-machine ssh manager1 "wget -O traefik.toml  https://raw.githubusercontent.com/jinseob2kim/swarm-setting/master/opt/traefik/traefik.toml"
 
 # Create traefik service
 docker service create \
