@@ -1,11 +1,23 @@
 defaultEntryPoints = ["http", "https"]
 
+logLevel = "INFO"
+
 [api]
 dashboard = true
 address = ":8080"
   #[web.auth.basic]
   #users = ["admin:$apr1$EhmZOKGp$oahMdaltwVrKzXqkV2KI8."]
-  
+
+
+[docker]
+#endpoint = "unix:///var/run/docker.sock"
+endpoint = "tcp://127.0.0.1:2375"                ## swarm mode
+domain = "${DOMAINNAME}"
+watch = true
+exposedByDefault = true
+swarmMode = true
+
+
   
 [entryPoints]
   [entryPoints.http]
