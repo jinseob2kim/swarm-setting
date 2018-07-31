@@ -14,10 +14,6 @@ address = ":8080"
       entryPoint = "https"
   [entryPoints.https]
   address = ":443"
-    [entryPoints.https.redirect]
-      regex = "^https://anpanman.co.kr/(.*)"
-      replacement = "https://www.anpanman.co.kr/$1"
-      permanent = true
     [entryPoints.https.tls]  
 
 
