@@ -10,8 +10,7 @@ address = ":8080"
 
 
 [docker]
-#endpoint = "unix:///var/run/docker.sock"
-endpoint = "tcp://127.0.0.1:2375"                ## swarm mode
+endpoint = "unix:///var/run/docker.sock"  ## default
 domain = "${DOMAINNAME}"
 watch = true
 exposedByDefault = true
