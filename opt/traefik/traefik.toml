@@ -29,7 +29,7 @@ onDemand = false
 #[acme.httpChallenge]
 #  entryPoint = "http"
 
-## *.anpanman.co.kr & anpanman.co.kr should be in DNS "A": digitalocean
+## *.anpanman.co.kr & anpanman.co.kr should be in DNS "A or CNAME": digitalocean
 [acme.dnsChallenge]
   provider = "digitalocean"
   delayBeforeCheck = 0 
