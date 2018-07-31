@@ -9,13 +9,6 @@ address = ":8080"
   #users = ["admin:$apr1$EhmZOKGp$oahMdaltwVrKzXqkV2KI8."]
 
 
-[docker]
-endpoint = "unix:///var/run/docker.sock"  ## default
-domain = "${DOMAINNAME}"
-watch = true
-exposedByDefault = true
-swarmMode = true
-
 
   
 [entryPoints]
