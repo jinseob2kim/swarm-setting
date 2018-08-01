@@ -4,19 +4,49 @@ author: "Jinseob Kim"
 date: "October 26, 2018"
 output:
   slidy_presentation:
-    footer: "Copyright (c) 2018, Jinseob Kim"
-    font_adjustment: 0
+    highlight: pygments
+    font_adjustment: +2
     duration: 40
-    highlight: tango
----
+    footer: "Copyright 2018, Jinseob Kim"
+    fig_width: 7
+    fig_height: 6
+    fig_caption: true
+    df_print: paged
 
+---
+ 
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-# Executive Summary
+
+
+
+# 예시 
+
+## OK {.bigger}
+
+$$1+1=2$$
+
+---
+
+asdasd
+
+## Executive Summary 
+
+
+맞춤형 의학연구 애플리케이션을 위해
+
+
+1. **스웜 클러스터링** 환경에서 `Rstudio` & `Shiny-server` 를 구축하고
+
+
+2. 의학 연구용 `ShinyApps` 를 만들었습니다.
+
+
+# 시작
 
 ## R Markdown
 
@@ -38,7 +68,19 @@ summary(cars)
 
 ## Slide with Plot
 
-```{r pressure}
+```{r pressure, fig.cap="A scatterplot."}
 plot(pressure)
 ```
 
+## datatable
+```{r}
+library(data.table);library(DT)
+datatable(mtcars)
+```
+
+
+
+## df-paged
+```{r}
+mtcars
+```
