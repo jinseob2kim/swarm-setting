@@ -19,22 +19,10 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+library(data.table);library(DT)
 ```
 
-
-
-
-# 예시 
-
-## OK {.bigger}
-
-$$1+1=2$$
-
----
-
-asdasd
-
-## Executive Summary 
+# Executive Summary 
 
 
 맞춤형 의학연구 애플리케이션을 위해
@@ -43,44 +31,64 @@ asdasd
 1. **스웜 클러스터링** 환경에서 `Rstudio` & `Shiny-server` 를 구축하고
 
 
-2. 의학 연구용 `ShinyApps` 를 만들었습니다.
+2. 의학 연구용 `ShinyApps` 를 만들어갑니다.
 
 
-# 시작
 
-## R Markdown
+# 1. 스웜 클러스터링 환경 만들기
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+1. [Docker](https://www.docker.com/what-docker) 이미지 `rocker/studio` 활용하여 `Rstudio` & `Shiny-server` 컨테이너 제작.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
 
-## Slide with Bullets
+2. [Docker-machine](https://docs.docker.com/machine/overview/)으로 [docker](https://www.docker.com/what-docker)가 설치된 클라우드 컴퓨터 생성.
 
+
+3. [Docker swarm](https://docs.docker.com/engine/swarm/) 으로 클러스터링.
+
+
+4. 스웜환경에서 컨테이너 구동.
+
+
+5. [Traefik](https://traefik.io/)과 [Let's Encrypt](https://docs.traefik.io/configuration/acme/)로 `subdomain`과 `https` 보안 적용.
+
+
+# Docker
 - Bullet 1
 - Bullet 2
 - Bullet 3
 
-## Slide with R Output
+# Docker-machine
 
-```{r cars, echo = TRUE}
-summary(cars)
+
+# Docker swarm 
+
+
+# 컨테이너 실행
+
+
+# Reveres proxy & https
+
+
+
+# 2. 의학연구용 `ShinyApps` 만들기 
+
+# Label
+
+# Table 1
+```{r}
+datatable(mtcars)
 ```
 
-## Slide with Plot
+# Main analysis
+
+
+# Figure
 
 ```{r pressure, fig.cap="A scatterplot."}
 plot(pressure)
 ```
 
-## datatable
-```{r}
-library(data.table);library(DT)
-datatable(mtcars)
-```
 
 
 
-## df-paged
-```{r}
-mtcars
-```
+
