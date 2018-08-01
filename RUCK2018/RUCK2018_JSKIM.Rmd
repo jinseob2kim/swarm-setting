@@ -1,0 +1,44 @@
+---
+title: "맞춤형 의학연구 애플리케이션을 위한 개발 환경 구축"
+author: "Jinseob Kim"
+date: "October 26, 2018"
+output:
+  slidy_presentation:
+    footer: "Copyright (c) 2018, Jinseob Kim"
+    font_adjustment: 0
+    duration: 40
+    highlight: tango
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Executive Summary
+
+## R Markdown
+
+This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+
+## Slide with Bullets
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure}
+plot(pressure)
+```
+
