@@ -79,8 +79,30 @@ library(data.table);library(DT)
 datatable(mtcars)
 ```
 
-# Main analysis
 
+---
+
+<div id="shiny">
+<iframe src="http://www.studysupporters.co.kr/shiny/navbar/" width=100% height=1000px frameborder=0></iframe>
+</div>
+     
+---
+
+<div id="shiny">
+<iframe src="http://www.studysupporters.co.kr/shiny/health-report/" width=100% height=1000px frameborder=0></iframe>
+</div>
+
+---
+
+<div id="shiny">
+<iframe src="http://www.studysupporters.co.kr/shiny/smmgkim84/DVT2018/" width=100% height=1000px frameborder=0></iframe>
+</div>
+
+---
+
+<div id="shiny">
+<iframe src="http://www.studysupporters.co.kr/shiny/gwas/" width=100% height=1000px frameborder=0></iframe>
+</div>
 
 # Figure
 
