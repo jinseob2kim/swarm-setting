@@ -19,8 +19,8 @@ address = ":8080"
   [entryPoints.https]
   address = ":443"
     [entryPoints.https.redirect]
-      regex = "^https://${DOMAINNAME}/(.*)"
-      replacement = "https://www.${DOMAINNAME}/$1"
+      regex = "^https://anpanman.co.kr/(.*)"
+      replacement = "https://www.anpanman.co.kr/$1"
       permanent = true
     [entryPoints.https.tls]  
 
