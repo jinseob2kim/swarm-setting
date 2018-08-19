@@ -5,7 +5,7 @@
 [docker-machine](https://docs.docker.com/machine/overview/)을 활용하여 [docker](https://www.docker.com/what-docker)가 설치된 클라우드 컴퓨터를 쉽게 생성할 수 있다.
 
 ```shell
-base=https://github.com/docker/machine/releases/download/v0.14.0 &&
+base=https://github.com/docker/machine/releases/download/v0.15.0 &&
 curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
 sudo install /tmp/docker-machine /usr/local/bin/docker-machine
 docker-machine version
@@ -100,9 +100,14 @@ DOMAINNAME="anpanman.co.kr"
 docker network create --driver=overlay traefik-net
 
 # For Let's Encrypt
-docker-machine ssh manager1 "touch acme.json && chmod 600 acme.json"
-docker-machine ssh manager1 "wget -O traefik.toml  https://raw.githubusercontent.com/jinseob2kim/swarm-setting/master/opt/traefik/traefik.toml"
-
+docker-machine ssh manager1 "DOMAINNAME=anpanman.co.kr && \ 
+                             mkdir /home/js/opt && \ 
+                             mkdir /home/js/opt/traefik && \
+                             cd /home/js/opt/traefik && \
+                             touch acme.json && chmod 600 acme.json && \
+                             wget -O traefik.toml  https://raw.githubusercontent.com/jinseob2kim/swarm-setting/master/opt/traefik/traefik.toml"
+                             
+                             
 # Create traefik service
 docker service create \
     --name traefik \
@@ -139,7 +144,7 @@ https://anpanman.co.kr, https://www.anpanman.co.kr 에서 `nginx` 실행환경�
 
 ### Rstudio & shiny server
 
-잘 알려진 [rocker](https://hub.docker.com/r/rocker/rstudio/) 이미지를 수정해서 이용하였다. 
+자체적으로 이미지 [docker-rshiny](https://hub.docker.com/r/jinseob2kim/docker-rshiny/) 를 만들어 사용하였다.
 
 ```shell
 docker service create \
@@ -148,11 +153,13 @@ docker service create \
     --label traefik.rstudio.port=8787 \
     --label traefik.shiny.frontend.rule="Host:shiny.anpanman.co.kr" \
     --label traefik.rstudio.frontend.rule="Host:rstudio.anpanman.co.kr" \
-    -e PASSWORD=wlstjq85** -e ROOT=TRUE \
+    -e PASSWORD=js -e ROOT=TRUE \
     --mount=type=bind,src=/home/js,dst=/home/rstudio \
     --network traefik-net \
-     jinseob2kim/docker-rocker
+     jinseob2kim/docker-rshiny
 ```
+https://rstudio.anpanman.co.kr 에서 'rstudio server'를, https://shiny.anpanman.co.kr 에서 'shiny server'를 실행할 수 있다. 
+
 
 ### Viz
 
