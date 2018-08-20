@@ -7,7 +7,7 @@ output:
     highlight: pygments
     font_adjustment: +2
     duration: 40
-    footer: "Copyright 2018, Jinseob Kim"
+    footer: "&copy;2018 ANPANMAN Co.,Ltd. All rights reserved."
     fig_width: 7
     fig_height: 6
     fig_caption: true
@@ -74,34 +74,40 @@ library(data.table);library(DT)
 
 # Label
 
-# Table 1
 ```{r}
 datatable(mtcars)
 ```
 
 
+# Table 1: tableone package
+
+![](https://github.com/kaz-yos/tableone/raw/master/tableone.gif)
+
+[tableone](https://github.com/kaz-yos/tableone) package
+
+
 ---
 
 <div id="shiny">
-<iframe src="http://www.studysupporters.co.kr/shiny/navbar/" width=100% height=1000px frameborder=0></iframe>
+<iframe src="https://app.anpanman.co.kr/navbar/" width=100% height=1000px frameborder=0></iframe>
 </div>
      
 ---
 
 <div id="shiny">
-<iframe src="http://www.studysupporters.co.kr/shiny/health-report/" width=100% height=1000px frameborder=0></iframe>
+<iframe src="https://app.anpanman.co.kr/health-report/" width=100% height=1000px frameborder=0></iframe>
 </div>
 
 ---
 
 <div id="shiny">
-<iframe src="http://www.studysupporters.co.kr/shiny/smmgkim84/DVT2018/" width=100% height=1000px frameborder=0></iframe>
+<iframe src="https://app.anpanman.co.kr/yschoi/" width=100% height=1000px frameborder=0></iframe>
 </div>
 
 ---
 
 <div id="shiny">
-<iframe src="http://www.studysupporters.co.kr/shiny/gwas/" width=100% height=1000px frameborder=0></iframe>
+<iframe src="https://app.anpanman.co.kr/gwas/" width=100% height=1000px frameborder=0></iframe>
 </div>
 
 # Figure
