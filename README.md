@@ -154,7 +154,7 @@ docker service create \
     --label traefik.shiny.frontend.rule="Host:shiny.anpanman.co.kr" \
     --label traefik.rstudio.frontend.rule="Host:rstudio.anpanman.co.kr" \
     -e USER=js -e PASSWORD=js -e ROOT=TRUE \
-    --mount=type=bind,src=/home/js,dst=/home/rstudio \
+    --mount=type=bind,src=/home/js,dst=/home/js \
     --network traefik-net \
      jinseob2kim/docker-rshiny
 ```
