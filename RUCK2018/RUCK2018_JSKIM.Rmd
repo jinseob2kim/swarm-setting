@@ -43,9 +43,19 @@ include_graphics("color_logo_transparent.png")
 ```
 
 
+# 1. 마이크로서비스 아키텍처 
 
+```{r, out.width= "40%"}
+include_graphics("https://blog.philipphauer.de/blog/2015/0411-microservices-nutshell-pros-cons/Monolith-vs-Microservices.png")
+```
 
-# 1. 스웜 클러스터링 환경 만들기
+```{r, out.width= "60%"}
+include_graphics("https://blog.philipphauer.de/blog/2015/0411-microservices-nutshell-pros-cons/Scaling-Microservices.png")
+```
+
+https://blog.philipphauer.de/microservices-nutshell-pros-cons/
+
+#
 
 1. [Docker](https://www.docker.com/what-docker) 이미지 `rocker/studio` 활용하여 `Rstudio` & `Shiny-server` 컨테이너 제작.
 
@@ -56,16 +66,20 @@ include_graphics("color_logo_transparent.png")
 3. [Docker swarm](https://docs.docker.com/engine/swarm/) 으로 클러스터링.
 
 
-4. 스웜환경에서 컨테이너 구동.
+4. 스웜환경에서 Docker image를 서비스로 구동.
 
-
-5. [Traefik](https://traefik.io/)과 [Let's Encrypt](https://docs.traefik.io/configuration/acme/)로 **subdomain**과 **https** 보안 적용.
 
 
 # Docker
 - Bullet 1
 - Bullet 2
 - Bullet 3
+
+```{r, out.width= "50%"}
+include_graphics("https://subicura.com/assets/article_images/2017-01-19-docker-guide-for-beginners-1/vm-vs-docker.png")
+```
+
+https://subicura.com/2017/01/19/docker-guide-for-beginners-1.html
 
 # Docker-machine
 
@@ -237,7 +251,7 @@ docker service create \
 
 
 
-# Dynamic proxy & https: [Traefik](https://traefik.io/)
+# 2. Dynamic proxy & https: [Traefik](https://traefik.io/)
 
 ```shell
 eval $(docker-machine env manager1)
@@ -317,7 +331,7 @@ https://anpanman.co.kr, https://www.anpanman.co.kr 에서 [nginx](https://www.ng
 
 
 
-# 2. 의학연구용 `ShinyApps` 만들기 
+# 3. 의학연구용 `ShinyApps` 만들기 
 
 # Label
 
