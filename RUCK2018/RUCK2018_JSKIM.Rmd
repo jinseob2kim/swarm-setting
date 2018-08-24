@@ -4,7 +4,7 @@ author: "Jinseob Kim"
 date: "October 26, 2018"
 output:
   slidy_presentation:
-    theme: united
+    theme: readable
     highlight: tango
     font_adjustment: +2
     duration: 40
