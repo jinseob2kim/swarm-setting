@@ -14,6 +14,8 @@ output:
     fig_caption: true
     df_print: paged
 subtitle: ANPANMAN Co.,Ltd.
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -447,7 +449,7 @@ include_graphics("https://github.com/kaz-yos/tableone/raw/master/tableone.gif")
 
 https://github.com/kaz-yos/tableone
 
-- [table one](https://github.com/kaz-yos/tableone) 패키지 기반으로 **Label** 정보 적용하여 앱 구현
+- [`table one`](https://github.com/kaz-yos/tableone) 패키지 기반으로 **Label** 정보 적용하여 앱 구현
 
 
 # Main results 
