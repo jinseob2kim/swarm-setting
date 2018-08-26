@@ -370,7 +370,22 @@ https://anpanman.co.kr, https://www.anpanman.co.kr 에서 [nginx](https://www.ng
 
 # 3. 의학연구용 `ShinyApps` 만들기 
 
+# 주 활용 패키지 
+
+- 데이터: `data.table`, `DT`, `labelled`
+
+- 통계분석: `tableone`, `epiDisplay`, `survival`, `geepack`, `lme4`, `plotROC`, `pROC`
+
+- Plot: `ggplot2`, `svglite`
+
+- 패키지: `devtools`, `roxygen2`
+
+- Shiny: `shinycustomloader` 
+
+
 # Label
+
+- 데이터의 변수명, 값 $\neq$ 테이블/그림의 변수명, 값 
 
 ```{r}
 datatable(mtcars)
@@ -384,35 +399,16 @@ datatable(mtcars)
 [tableone](https://github.com/kaz-yos/tableone) package
 
 
----
+# Examples 
 
-<div id="shiny">
-<iframe src="https://app.anpanman.co.kr/navbar/" width=100% height=1000px frameborder=0></iframe>
-</div>
-     
----
+1. [기본 앱 모음](https://app.anpanman.co.kr/navbar)
 
-<div id="shiny">
-<iframe src="https://app.anpanman.co.kr/health-report/" width=100% height=1000px frameborder=0></iframe>
-</div>
+2. [건강설문조사 리포트](https://app.anpanman.co.kr/health-report)
 
----
+3. [대장암 환자 연구: 강릉아산병원](https://app.anpanman.co.kr/yschoi)
 
-<div id="shiny">
-<iframe src="https://app.anpanman.co.kr/yschoi/" width=100% height=1000px frameborder=0></iframe>
-</div>
+4. [이완기 압력 계산: 삼성서울병원](https://app.anpanman.co.kr/chkh/dPR)
 
----
-
-<div id="shiny">
-<iframe src="https://app.anpanman.co.kr/gwas/" width=100% height=1000px frameborder=0></iframe>
-</div>
-
-# Figure
-
-```{r pressure, fig.cap="A scatterplot."}
-plot(pressure)
-```
 
 
 
