@@ -13,13 +13,13 @@ output:
     fig_height: 6
     fig_caption: true
     df_print: paged
-
+subtitle: ANPANMAN Co.,Ltd.
 ---
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
-library(data.table);library(DT);library(knitr)
+library(knitr)
 ```
 
 
@@ -44,6 +44,8 @@ include_graphics("color_logo_transparent.png")
 
 
 # 1. 마이크로서비스 아키텍처 
+
+# 
 
 ```{r, out.width= "40%"}
 include_graphics("https://blog.philipphauer.de/blog/2015/0411-microservices-nutshell-pros-cons/Monolith-vs-Microservices.png")
@@ -76,13 +78,22 @@ https://subicura.com/2017/01/19/docker-guide-for-beginners-1.html
 - 여러 대의 서버(docker가 설치된)를 한 번에 관리할 수 있음. 
 - 예) AWS 서버 2대 불러오기, 서버 삭제하기
 
+```{r, out.width= "70%"}
+include_graphics("https://docs.docker.com/machine/img/machine-mac-win.png")
+include_graphics("https://docs.docker.com/machine/img/provision-use-case.png")
+```
+
+https://docs.docker.com/machine/overview/#whats-the-difference-between-docker-engine-and-docker-machine
+
+
+# [Docker-machine](https://docs.docker.com/machine/overview/) 설치
+
 ```shell
 base=https://github.com/docker/machine/releases/download/v0.15.0 &&
 curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
 sudo install /tmp/docker-machine /usr/local/bin/docker-machine
 docker-machine version
 ```
-
 
 # 예: Digital ocean - manager 이름으로 서버 생성.   
 
@@ -168,8 +179,6 @@ docker-machine create \
     docker-machine ssh manager$c "adduser js --gecos 'First Last,RoomNumber,WorkPhone,HomePhone' --disabled-password && sh -c 'echo js:js | sudo chpasswd' && usermod -aG sudo js"
 done
 ```
-
-
 
 
 
@@ -262,17 +271,28 @@ docker service create \
 
 # 2. Dynamic proxy & https: [Traefik](https://traefik.io/)
 
+
+# Why [Traefik](https://traefik.io/)
+
 - www.anpanman.co.kr:3838, :8787 보기 싫다.  
 - rstudio.anpanman.co.kr, shiny.anpanman.co.kr 같이 **subdomain**으로 만들고 싶다. 
 - tensorflow 추가하면 tensorflow.anpanman.co.kr,  서비스 추가할 때마다 서비스명.anpanman.co.kr로 만들고 싶다. 
 - 무료 https 인증 프로그램인 [Let's Encrypt](https://letsencrypt.org/) 를 자동으로 적용하고 싶다. 
 
-```{r, out.width= "50%"}
-include_graphics("https://boxboat.com/wp-content/uploads/2017/10/Managing-Multiple-Microservices-with-Traefik-in-Docker-Swarm-2-1080x675.png")
+```{r, out.width= "70%"}
+include_graphics("https://ian-says.com/articles/traefik-proxy-docker-ssl/thumbnail.png")
 ```
 
-https://boxboat.com/2017/10/10/managing-multiple-microservices-with-traefik-in-docker-swarm/
+https://ian-says.com/articles/traefik-proxy-docker-lets-encrypt/
 
+
+# Overview [Traefik](https://traefik.io/) 
+
+```{r, out.width= "90%"}
+include_graphics("https://i2.wp.com/codersdiary.me/wp-content/uploads/2017/03/drawit-diagram-7.png?w=1382&ssl=1")
+```
+
+https://codersdiary.me/en/2017/04/01/reverse-proxy-and-docker-containers/
 
 # Run [Traefik](https://traefik.io/)
 
@@ -383,20 +403,75 @@ https://anpanman.co.kr, https://www.anpanman.co.kr 에서 [nginx](https://www.ng
 - Shiny: `shinycustomloader` 
 
 
+# [`DT`](https://rstudio.github.io/DT/)
+
+- 반응형 테이블 패키지
+
+- 강조: 형광색 
+
+- 엑셀 파일로 바로 다운로드 
+
+```{r, out.width= "60%"}
+include_graphics("https://rstudioblog.files.wordpress.com/2015/06/screenshot-from-2015-06-18-151117.png")
+```
+
+https://blog.rstudio.com/2015/06/24/dt-an-r-interface-to-the-datatables-library/
+
+
+# [`shinycustomloader`](https://github.com/emitanaka/shinycustomloader)
+
+- 앱 실행 중 로딩 보여주기.
+
+- 실행이 오래걸리는 앱일 때 필요.
+
+```{r, out.width= "70%"}
+include_graphics("https://user-images.githubusercontent.com/7620319/38162696-cafcd18e-3531-11e8-8228-f08defa97ae0.gif")
+```
+
 # Label
 
-- 데이터의 변수명, 값 $\neq$ 테이블/그림의 변수명, 값 
+- **데이터**의 변수명, 값 $\neq$ **테이블/그림**의 변수명, 값 
 
-```{r}
-datatable(mtcars)
+- **Label data** 생성하고 통계결과와 그림에 적용: [자체 패키지](https://github.com/jinseob2kim/jstable)
+
+```{r, out.width= "70%"}
+include_graphics("label.jpg")
 ```
 
 
-# Table 1: tableone package
+# Table 1: `tableone` package
 
-![](https://github.com/kaz-yos/tableone/raw/master/tableone.gif)
+```{r, out.width= "70%"}
+include_graphics("https://github.com/kaz-yos/tableone/raw/master/tableone.gif")
+```
 
-[tableone](https://github.com/kaz-yos/tableone) package
+https://github.com/kaz-yos/tableone
+
+- [table one](https://github.com/kaz-yos/tableone) 패키지 기반으로 **Label** 정보 적용하여 앱 구현
+
+
+# Main results 
+
+- **Regression, logistic regression, cox** : `epiDisplay` 패키지 기반으로 결과테이블 생성
+
+- **GEE, linear mixed model, GLMM** : [자체 패키지](https://github.com/jinseob2kim/jstable) 로 결과테이블 생성
+
+- **Label** 정보 적용.
+
+```{r, out.width= "60%"}
+include_graphics("cox.jpg")
+```
+
+
+# Plot
+
+- `svglite`: **svg** 포맷으로 그림 저장하여 **ppt**에서 수정 가능. 
+
+- Kaplan meire plot: [`ggkm` 패키지](https://github.com/michaelway/ggkm) 기반으로 [자체 패키지](https://github.com/jinseob2kim/jskm) 사용 
+
+```{r, out.width= "70%"}
+include_graphics("km.jpg")
+```
 
 
 # Examples 
@@ -411,14 +486,13 @@ datatable(mtcars)
 
 
 
+# 마무리 {.bigger}
 
-
-# {.bigger}
-
+</br></br></br></br>
 <center> [Anpanman](https://www.anpanman.co.kr/) 은 앞으로 맞춤형 의학연구 지원을 통해 의학연구 활성화를 이끌겠습니다. 감사합니다.</center> 
 
 
-```{r, out.width= "50%"}
+```{r, out.width= "70%"}
 include_graphics("color_logo_transparent.png")
 ```
 
