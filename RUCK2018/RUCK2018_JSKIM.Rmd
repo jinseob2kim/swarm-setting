@@ -21,7 +21,7 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
-library(knitr);library(DT);library(dplyr)
+library(knitr);library(DT);library(dplyr);library(epiDisplay)
 ```
 
 
@@ -700,6 +700,7 @@ datatable(iris, extension= "Buttons",
 #
 
 ```{r, echo = T,  eval = F}
+library(DT)
 datatable(iris, extension= "Buttons",
           options = list(dom = '<lf<rt>Bip>', lengthMenu = list(c(10, 25, -1), c('10', '25', 'All')), pageLength = 10,
                         buttons = list('copy', 'print', 
@@ -773,13 +774,28 @@ https://github.com/kaz-yos/tableone
 
 - **Regression, logistic regression, cox** : `epiDisplay` 패키지 기반으로 결과테이블 생성
 
-- **GEE, linear mixed model, GLMM** : [자체 패키지](https://github.com/jinseob2kim/jstable) 로 결과테이블 생성
+```{r, echo= T, eval = F}
+library(epiDisplay)
+model0 <- glm(case ~ induced + spontaneous, family=binomial, data=infert)
+logistic.display(model0, crude = T, crude.p.value = T)
+```
 
-- **Label** 정보 적용.
+```{r}
+m0 = logistic.display(glm(case ~ induced + spontaneous, family=binomial, data=infert), crude = T, crude.p.value = T)
+datatable(m0$table, caption = m0$first.line)
+cat(m0$last.line)
+```
+
+
+# 
 
 ```{r, out.width= "60%"}
 include_graphics("cox.jpg")
 ```
+
+- **GEE, linear mixed model, GLMM** : [자체 패키지](https://github.com/jinseob2kim/jstable) 로 결과테이블 생성
+
+- **Label** 정보 적용.
 
 
 # Plot
