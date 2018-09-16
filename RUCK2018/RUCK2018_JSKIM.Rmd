@@ -152,10 +152,13 @@ docker run --rm -d -p 3838:3838 -p 8787:8787 \
 1. `Rstudio`와 `shiny server`가 설치된 [Docker](https://www.docker.com/what-docker) 이미지를 만들고 이것을 [Docker swarm](https://docs.docker.com/engine/swarm/)을 이용해 배포함으로써 서버의 **종류와 갯수**에 구애받지 않는  **마이크로서비스 아키텍처**(microservice architecture)를 구축하였으며
 
 
-
-
 서버의 **갯수에 구애받지 않는다?** [Docker](https://www.docker.com/what-docker) 만으로는 불가능. 
 
+```{r, out.width= "70%", fig.cap = "Docker vs Docker swarm"}
+include_graphics("https://www.penflip.com/akira.ohio/appcatalyst-hands-on-lab-en/blob/master/images/docker-ppt-swarm-1.png/?raw=true")
+```
+
+https://www.penflip.com/akira.ohio/appcatalyst-hands-on-lab-en/blob/master/images/docker-ppt-swarm-1.png/?raw=true
 
 
 # [Docker swarm](https://docs.docker.com/engine/swarm/) 
@@ -174,13 +177,6 @@ include_graphics("https://www.upcloud.com/support/wp-content/uploads/2016/10/Doc
 https://www.upcloud.com/support/docker-swarm-orchestration/
 
 
-#
-
-```{r, out.width= "70%", fig.cap = "Docker vs Docker swarm"}
-include_graphics("https://www.penflip.com/akira.ohio/appcatalyst-hands-on-lab-en/blob/master/images/docker-ppt-swarm-1.png/?raw=true")
-```
-
-https://www.penflip.com/akira.ohio/appcatalyst-hands-on-lab-en/blob/master/images/docker-ppt-swarm-1.png/?raw=true
 
 
 # Manager & worker node
