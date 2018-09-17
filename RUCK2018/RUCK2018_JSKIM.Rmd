@@ -327,18 +327,21 @@ docker service scale rshiny=1
 ```
 
 
+
+
 # 옵션: [Docker-machine](https://docs.docker.com/machine/overview/)
 
 - 여러 대의 서버(docker가 설치된)를 로컬 컴퓨터에서 한 번에 관리할 수 있음. 
 - 클라우드 지원: 예) AWS 서버 2대 불러오기, 서버 삭제하기
 
-```{r, out.width= "70%", fig.cap= "https://docs.docker.com/machine/overview/#whats-the-difference-between-docker-engine-and-docker-machine"}
+```{r, out.width= "70%"}
 include_graphics("https://docs.docker.com/machine/img/machine-mac-win.png")
 include_graphics("https://docs.docker.com/machine/img/provision-use-case.png")
 ```
 
 - **2376** 포트 오픈 필요.
 
+https://docs.docker.com/machine/overview/#whats-the-difference-between-docker-engine-and-docker-machine"
 
 # [Docker-machine](https://docs.docker.com/machine/overview/) 설치
 
@@ -698,15 +701,15 @@ https://anpanman.co.kr, https://www.anpanman.co.kr 에서 [nginx](https://www.ng
 
 # 주 활용 패키지 
 
-- 데이터: `data.table`, `DT`
+- 데이터: [`data.table`](https://github.com/Rdatatable/data.table/wiki), [`DT`](https://rstudio.github.io/DT/)
 
-- 통계분석: `tableone`, `epiDisplay`, `survival`, `geepack`, `lme4`, `plotROC`, `pROC`
+- 통계분석: [`tableone`](https://github.com/kaz-yos/tableone), [`epiDisplay`](https://cran.r-project.org/web/packages/epiDisplay/index.html), `survival`, `geepack`, `lme4`, `plotROC`, `pROC`
 
-- Plot: `ggplot2`, `GGally`, `svglite`
+- Plot: `ggplot2`, [`GGally`](http://ggobi.github.io/ggally/), [`svglite`](https://github.com/r-lib/svglite) 
 
 - 패키지: `devtools`, `roxygen2`
 
-- Shiny: `shinycustomloader`, `shiny.i18n` 
+- Shiny: [`shinycustomloader`](https://github.com/emitanaka/shinycustomloader), [`shiny.i18n`](https://github.com/Appsilon/shiny.i18n)
 
 
 # [`DT`](https://rstudio.github.io/DT/)
@@ -809,7 +812,7 @@ include_graphics("https://user-images.githubusercontent.com/7620319/38162696-caf
 
 - **데이터**의 변수명, 값 $\neq$ **테이블/그림**의 변수명, 값 
 
-- **Label data** 생성하고 통계결과와 그림에 적용: [자체 패키지](https://github.com/jinseob2kim/jstable)
+- **Label data** 생성하고 통계결과와 그림에 적용: 자체 패키지 [`jstable`](https://github.com/jinseob2kim/jstable)
 
 ```{r, out.width= "70%"}
 include_graphics("label.jpg")
@@ -827,7 +830,7 @@ include_graphics("https://github.com/kaz-yos/tableone/raw/master/tableone.gif")
 
 # Main results 
 
-- **Regression, logistic regression, cox** : `epiDisplay` 패키지 기반으로 결과테이블 생성
+- **Regression, logistic regression, cox** : [`epiDisplay`](https://cran.r-project.org/web/packages/epiDisplay/index.html) 패키지 기반으로 결과테이블 생성
 
 ```{r, echo= T, eval = F}
 library(epiDisplay)
@@ -837,7 +840,7 @@ logistic.display(model0, crude = T, crude.p.value = T)
 
 ```{r}
 m0 = logistic.display(glm(case ~ induced + spontaneous, family=binomial, data=infert), crude = T, crude.p.value = T)
-datatable(m0$table, caption = m0$first.line)
+datatable(m0$table, caption = m0$first.line, options = list(dom="t"))
 cat(m0$last.line)
 ```
 
@@ -848,18 +851,18 @@ cat(m0$last.line)
 include_graphics("cox.jpg")
 ```
 
-- **GEE, linear mixed model, GLMM** : [자체 패키지](https://github.com/jinseob2kim/jstable) 로 결과테이블 생성
+- **GEE, linear mixed model, GLMM** : 자체 패키지 [`jstable`](https://github.com/jinseob2kim/jstable) 로 결과테이블 생성
 
 - **Label** 정보 적용.
 
 
 # Plot
 
-- `GGally` : `ggpair` 함수로 변수 비교
+- [`GGally`](http://ggobi.github.io/ggally/) : `ggpair` 함수로 변수 비교
 
-- `svglite`: **svg** 포맷으로 그림 저장하여 **ppt**에서 수정 가능. 
+- [`svglite`](https://github.com/r-lib/svglite) : **svg** 포맷으로 그림 저장하여 **ppt**에서 수정 가능. 
 
-- Kaplan meire plot: [`ggkm` 패키지](https://github.com/michaelway/ggkm) 기반으로 [자체 패키지](https://github.com/jinseob2kim/jskm) 사용 
+- Kaplan meire plot: [`ggkm`](https://github.com/michaelway/ggkm) 패키지 기반으로 자체 패키지 [`jskm`](https://github.com/jinseob2kim/jskm) 사용 
 
 ```{r, out.width= "70%"}
 include_graphics("km.jpg")
@@ -868,7 +871,7 @@ include_graphics("km.jpg")
 
 # 다중언어 지원 
 
-- [`shiny.i18n` 패키지](https://github.com/Appsilon/shiny.i18n)
+- [`shiny.i18n`](https://github.com/Appsilon/shiny.i18n) 패키지
 
 ```{r, out.width= "70%", fig.cap = "https://cdn-ak.f.st-hatena.com/images/fotolife/k/ksmzn/20171209/20171209204102.gif"}
 include_graphics("https://cdn-ak.f.st-hatena.com/images/fotolife/k/ksmzn/20171209/20171209204102.gif")
