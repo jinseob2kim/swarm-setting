@@ -21,7 +21,7 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
-library(knitr);library(DT);library(dplyr);library(epiDisplay)
+library(knitr);library(DT);library(dplyr);library(epiDisplay);library(data.table)
 ```
 
 
@@ -50,20 +50,18 @@ library(knitr);library(DT);library(dplyr);library(epiDisplay)
 include_graphics("https://blog.philipphauer.de/blog/2015/0411-microservices-nutshell-pros-cons/Monolith-vs-Microservices.png")
 ```
 
-```{r, out.width= "60%"}
+```{r, out.width= "60%", fig.cap ="https://blog.philipphauer.de/microservices-nutshell-pros-cons/"}
 include_graphics("https://blog.philipphauer.de/blog/2015/0411-microservices-nutshell-pros-cons/Scaling-Microservices.png")
 ```
 
-https://blog.philipphauer.de/microservices-nutshell-pros-cons/
 
 
 # 여행용 파우치 
 
-```{r,  out.width= "60%"}
+```{r,  out.width= "60%", fig.cap = "https://funshop.akamaized.net/products/0000045775/HF-INLUGGAGE-POUCH-LINGERIE-%EC%83%81%EC%84%B8%ED%8E%98%EC%9D%B4%EC%A7%80_01.jpg"}
 include_graphics("https://funshop.akamaized.net/products/0000045775/HF-INLUGGAGE-POUCH-LINGERIE-%EC%83%81%EC%84%B8%ED%8E%98%EC%9D%B4%EC%A7%80_01.jpg")
 ```
 
-https://funshop.akamaized.net/products/0000045775/HF-INLUGGAGE-POUCH-LINGERIE-%EC%83%81%EC%84%B8%ED%8E%98%EC%9D%B4%EC%A7%80_01.jpg
 
 
 # 여행용 파우치 장단점
@@ -120,19 +118,25 @@ https://funshop.akamaized.net/products/0000045775/HF-INLUGGAGE-POUCH-LINGERIE-%E
 - [Docker hub](https://hub.docker.com/)을 통해 [github](https://github.com/)처럼 이용가능.  
 - 서버에 rstudio 설치(X), 서버에  rstudio가 설치된 리눅스 이미지를 설치(O). 
 
-```{r, out.width= "50%", fig.cap = "VM vs Docker"}
+```{r, out.width= "50%", fig.cap = "https://subicura.com/2017/01/19/docker-guide-for-beginners-1.html"}
 include_graphics("https://subicura.com/assets/article_images/2017-01-19-docker-guide-for-beginners-1/vm-vs-docker.png")
 ```
 
-https://subicura.com/2017/01/19/docker-guide-for-beginners-1.html
 
 # [Docker hub](https://hub.docker.com/) 활용 예
+
+```{r, out.width= "70%", fig.cap = "http://edu.delestra.com/docker-slides/img/docker_hub_auto_build.png"}
+include_graphics("http://edu.delestra.com/docker-slides/img/docker_hub_auto_build.png")
+```
 
 - [rshiny docker image](https://hub.docker.com/r/jinseob2kim/docker-rshiny/)
 
 
 - [rshiny github](https://github.com/jinseob2kim/docker-rshiny)
 
+
+
+# [Docker](https://www.docker.com/what-docker) 이미지 실행
 
 ```shell
 docker run --rm -d -p 3838:3838 -p 8787:8787 \
@@ -141,77 +145,128 @@ docker run --rm -d -p 3838:3838 -p 8787:8787 \
 ```
 
 - **--rm -d** : 실행 중지시 지움(--rm), 백그라운드 실행(-d)
+
+
 - 호스트의 **3838**포트를 이미지의 **3838**포트(`shiny server`)와 연결,  **8787**포트를 **8787**포트(`rstudio server`)에 연결
+
+
 - 유저 생성 : **js/js, 루트 권한**
+
+
 - [Docker hub](https://hub.docker.com/) 주소 : **jinseob2kim/docker-rshiny**
 
 
 
 # 서버의 갯수?
 
-1. `Rstudio`와 `shiny server`가 설치된 [Docker](https://www.docker.com/what-docker) 이미지를 만들고 이것을 [Docker swarm](https://docs.docker.com/engine/swarm/)을 이용해 배포함으로써 서버의 **종류와 갯수**에 구애받지 않는  **마이크로서비스 아키텍처**(microservice architecture)를 구축하였으며
-
+> 서버의 **종류와 갯수**에 구애받지 않는  **마이크로서비스 아키텍처**(microservice architecture)를 구축하였으며...
 
 서버의 **갯수에 구애받지 않는다?** [Docker](https://www.docker.com/what-docker) 만으로는 불가능. 
 
-```{r, out.width= "70%", fig.cap = "Docker vs Docker swarm"}
+```{r, out.width= "70%", fig.cap = "https://www.penflip.com/akira.ohio/appcatalyst-hands-on-lab-en/blob/master/images/docker-ppt-swarm-1.png/?raw=true"}
 include_graphics("https://www.penflip.com/akira.ohio/appcatalyst-hands-on-lab-en/blob/master/images/docker-ppt-swarm-1.png/?raw=true")
 ```
 
-https://www.penflip.com/akira.ohio/appcatalyst-hands-on-lab-en/blob/master/images/docker-ppt-swarm-1.png/?raw=true
 
 
 # [Docker swarm](https://docs.docker.com/engine/swarm/) 
 
-- Server orchestration: 지휘자가 오케스트라 연주하듯이
-- 여러대의 서버를 묶어 마치 하나의 서버를 이용하는 것처럼 느낌. 
-- [Docker](https://www.docker.com/what-docker) 이미지를 실행하면 자동으로 한가한 서버에 배치. 
-- [Docker](https://www.docker.com/what-docker) 에 내장되어 별다른 설치 필요없음. 
-- 비슷한 프로그램으로 구글의 [Kubernetes](https://kubernetes.io/) 가 있음. 
+- **Server orchestration**: 지휘자가 오케스트라 연주하듯이
+- 여러대의 서버를 묶어 **마치 하나의 서버**를 이용하는 것처럼 느낌. 
 
-
-```{r, out.width= "50%"}
+```{r, out.width= "70%", fig.cap = "https://www.upcloud.com/support/docker-swarm-orchestration/" }
 include_graphics("https://www.upcloud.com/support/wp-content/uploads/2016/10/Docker-Swarm-Orchestration-1024x265.png")
 ```
 
-https://www.upcloud.com/support/docker-swarm-orchestration/
+- [Docker](https://www.docker.com/what-docker) 이미지를 실행하면 자동으로 한가한 서버에 배치. 
+- [Docker](https://www.docker.com/what-docker) 에 내장되어 별다른 설치 필요없음. 
+- 비슷한 프로그램으로 구글의 [Kubernetes](https://kubernetes.io/)
+
 
 
 
 
 # Manager & worker node
 
-```{r, out.width= "50%", fig.cap = "실행 상태"}
+```{r, out.width= "50%", fig.cap = "https://pbs.twimg.com/media/DP5VZC8UIAAnV6j.jpg:large"}
 include_graphics("https://pbs.twimg.com/media/DP5VZC8UIAAnV6j.jpg:large")
 ```
 
-https://pbs.twimg.com/media/DP5VZC8UIAAnV6j.jpg:large
 
 
 
-# 예: [Docker swarm](https://docs.docker.com/engine/swarm/) 으로 서버들을 하나로 묶기
+# 예: [Docker swarm](https://docs.docker.com/engine/swarm/) 으로 서버 2개 묶기
 
+2개 서버: **manager, worker** node
+
+
+
+1. Init Docker Swarm mode: In **manager** node
 
 ```shell
 manger_ip = $(123.456.789.10)
-
-# Init Docker Swarm mode: In manager node
 docker swarm init --advertise-addr $manager_ip
+```
 
 
-# Get Swarm tokens
+
+2. Get Swarm tokens
+
+```shell
 worker_token=$(docker swarm join-token worker -q)
+```
 
 
-# Join worker nodes: In worker node
+
+3. Join worker nodes: In **worker** node
+
+```shell
 docker swarm join --token $worker_token $manager_ip:2377
-
 ````
+
+
 
 https://www.youtube.com/watch?v=2RQbpnRxx-Y
 
 
-# 주의
+# 주의 (1) - Port setting for swarm 
+
+- TCP port **2377** for cluster management & raft sync communications
+
+- TCP and UDP port **7946** for `control plane` gossip discovery communication between all nodes
+
+- UDP port **4789** for `data plane` VXLAN overlay network traffic
+
+- IP Protocol 50 (ESP) if you plan on using overlay network with the encryption option
+
+
+# AWS Security Group Example
+
+```{r}
+inbound_manager = data.table(
+  TYPE = c("Custom TCP Rule", "Custom TCP Rule", "Custom UDP Rule", "Custom UDP Rule", "Custom UDP Rule", "Custom Protocol"),
+  PROTOCOL = c("TCP", "TCP", "UDP", "UDP", "UDP", "50"),
+  PORTS = c(2377, 7946, 7946, 4789, 4789, "all"),
+  SOURCE = c("swarm + remote mgmt", "swarm", "swarm", "swarm", "swarm", "swarm")
+)
+
+datatable(inbound_manager, rownames = F, caption = "Inbound to Swarm Managers", options = list(dom = 't'))
+
+inbound_worker = data.table(
+  TYPE = c("Custom TCP Rule", "Custom UDP Rule", "Custom UDP Rule", "Custom Protocol"),
+  PROTOCOL = c("TCP", "UDP", "UDP", "50"),
+  PORTS = c(7946, 7946, 4789, "all"),
+  SOURCE = c("swarm", "swarm", "swarm", "swarm")
+)
+
+datatable(inbound_worker, rownames = F, caption = "Inbound to Swarm Workers", options = list(dom = 't'))
+
+```
+
+
+
+
+# 주의 (2)
 
 연결 가능한 서버끼리만 묶을 수 있다. 
 
@@ -250,12 +305,11 @@ docker service create \
 ```
 
 # 
+어떤 ip로 접속해도 실행 가능
 
-```{r, out.width= "50%", fig.cap = "어떤 ip로 접속해도 실행 가능"}
+```{r, out.width= "50%", fig.cap = "http://callistaenterprise.se/assets/blogg/docker/docker-in-swarm-mode-on-docker-in-docker/docker-swarm.png"}
 include_graphics("http://callistaenterprise.se/assets/blogg/docker/docker-in-swarm-mode-on-docker-in-docker/docker-swarm.png")
 ```
-
-http://callistaenterprise.se/assets/blogg/docker/docker-in-swarm-mode-on-docker-in-docker/docker-swarm.png
 
 
 # 사용자가 늘어나면?
@@ -278,12 +332,12 @@ docker service scale rshiny=1
 - 여러 대의 서버(docker가 설치된)를 로컬 컴퓨터에서 한 번에 관리할 수 있음. 
 - 클라우드 지원: 예) AWS 서버 2대 불러오기, 서버 삭제하기
 
-```{r, out.width= "70%"}
+```{r, out.width= "70%", fig.cap= "https://docs.docker.com/machine/overview/#whats-the-difference-between-docker-engine-and-docker-machine"}
 include_graphics("https://docs.docker.com/machine/img/machine-mac-win.png")
 include_graphics("https://docs.docker.com/machine/img/provision-use-case.png")
 ```
 
-https://docs.docker.com/machine/overview/#whats-the-difference-between-docker-engine-and-docker-machine
+- **2376** 포트 오픈 필요.
 
 
 # [Docker-machine](https://docs.docker.com/machine/overview/) 설치
@@ -296,6 +350,8 @@ docker-machine version
 ```
 
 # 예: Digital ocean - manager 이름으로 서버 생성.   
+
+- **TOKEN** 정보 필요 
 
 ```shell
 export DIGITALOCEAN_ACCESS_TOKEN=<YOUR_DIGITALOCEAN_ACCESS_TOKEN>
@@ -317,6 +373,9 @@ done
 
 
 # AWS
+
+- **ACCESS_KEY_ID, SECRET_ACCESS_KEY, VPC_ID** 필요
+- 포트 따로 열어줘야 됨.
 
 ```shell
 export AWS_ACCESS_KEY_ID=<YOUR_AWS_ACEESS_KEY_ID>
@@ -354,6 +413,9 @@ done
 
 # AZURE
 
+- **Subscription id** 필요
+- 포트 따로 열어줘야 됨.
+
 ```shell
 export sub=<YOUR_AZURE_SUBSCRIPTION_VALUE>
 
@@ -379,7 +441,6 @@ docker-machine create \
     docker-machine ssh manager$c "adduser js --gecos 'First Last,RoomNumber,WorkPhone,HomePhone' --disabled-password && sh -c 'echo js:js | sudo chpasswd' && usermod -aG sudo js"
 done
 ```
-
 
 
 
@@ -508,9 +569,9 @@ https://codersdiary.me/en/2017/04/01/reverse-proxy-and-docker-containers/
 
 # Run [Traefik](https://traefik.io/)
 
-1. 도메인 추가: *.DOMAINNAME
+1. 도메인 추가: `*.DOMAINNAME`
 
-도메인 설정 **CNAME**에 ** *.DOMAINNAME**를 추가해야 된다. 
+도메인 설정 **CNAME**에 `*.DOMAINNAME`를 추가해야 된다. 
 
 ```{r, out.width= "70%"}
 include_graphics("domain_wild.jpg")
@@ -697,7 +758,7 @@ datatable(iris, extension= "Buttons",
 
 ```{r, echo = T,  eval = F}
 library(DT)
-datatable(iris, extension= "Buttons",
+datatable(iris, extension= "Buttons", rownames = F,
           options = list(dom = '<lf<rt>Bip>', lengthMenu = list(c(10, 25, -1), c('10', '25', 'All')), pageLength = 10,
                         buttons = list('copy', 'print', 
                                        list(extend = 'collection', 
@@ -739,7 +800,7 @@ datatable(iris, extension= "Buttons",
 
 - 실행이 오래걸리는 앱일 때 필요.
 
-```{r, out.width= "70%"}
+```{r, out.width= "70%", fig.cap = "https://user-images.githubusercontent.com/7620319/38162696-cafcd18e-3531-11e8-8228-f08defa97ae0.gif"}
 include_graphics("https://user-images.githubusercontent.com/7620319/38162696-cafcd18e-3531-11e8-8228-f08defa97ae0.gif")
 ```
 
@@ -757,13 +818,11 @@ include_graphics("label.jpg")
 
 # Table 1: `tableone` package
 
-```{r, out.width= "70%"}
+```{r, out.width= "70%", fig.cap = "https://github.com/kaz-yos/tableone"}
 include_graphics("https://github.com/kaz-yos/tableone/raw/master/tableone.gif")
 ```
 
-https://github.com/kaz-yos/tableone
-
-- [`table one`](https://github.com/kaz-yos/tableone) 패키지 기반으로 **Label** 정보 적용하여 앱 구현
+- [`tableone`](https://github.com/kaz-yos/tableone) 패키지 기반으로 **Label** 정보 적용하여 앱 구현
 
 
 # Main results 
@@ -811,11 +870,11 @@ include_graphics("km.jpg")
 
 - [`shiny.i18n` 패키지](https://github.com/Appsilon/shiny.i18n)
 
-```{r, out.width= "70%"}
+```{r, out.width= "70%", fig.cap = "https://cdn-ak.f.st-hatena.com/images/fotolife/k/ksmzn/20171209/20171209204102.gif"}
 include_graphics("https://cdn-ak.f.st-hatena.com/images/fotolife/k/ksmzn/20171209/20171209204102.gif")
 ```
 
-https://cdn-ak.f.st-hatena.com/images/fotolife/k/ksmzn/20171209/20171209204102.gif
+
 
 
 # Examples 
