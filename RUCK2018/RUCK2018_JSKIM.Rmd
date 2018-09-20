@@ -882,15 +882,15 @@ include_graphics("https://cdn-ak.f.st-hatena.com/images/fotolife/k/ksmzn/2017120
 
 # Examples 
 
-1. [기본 앱 모음](https://app.anpanman.co.kr/navbar)
+1. [기본 앱 모음](http://147.47.68.165:2222/navbar)
 
-2. [건강설문조사 리포트](https://app.anpanman.co.kr/health-report)
+2. [건강설문조사 리포트](http://147.47.68.165:2222/health-report)
 
-3. [대장암 환자 연구: 강릉아산병원](https://app.anpanman.co.kr/yschoi)
+3. [대장암 환자 연구: 강릉아산병원](http://147.47.68.165:2222/yschoi)
 
-4. [이완기 압력 계산: 삼성서울병원](https://app.anpanman.co.kr/chkh/dPR)
+4. [이완기 압력 계산: 삼성서울병원](http://147.47.68.165:2222/chkh/dPR)
 
-5. [다중 언어: 한/영](https://app.anpanman.co.kr/shiny.i18n)
+5. [다중 언어: 한/영](http://147.47.68.165:2222/shiny.i18n)
 
 # Q & A {.bigger}
 
