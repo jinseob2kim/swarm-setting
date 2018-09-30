@@ -32,14 +32,30 @@ library(knitr);library(DT);library(dplyr);library(epiDisplay);library(data.table
 맞춤형 의학연구 애플리케이션을 위해
 
 
-1. `Rstudio`와 `shiny server`가 설치된 [Docker](https://www.docker.com/what-docker) 이미지를 만들고 이것을 [Docker swarm](https://docs.docker.com/engine/swarm/)을 이용해 배포함으로써 서버의 종류와 갯수에 구애받지 않는  **마이크로서비스 아키텍처**(microservice architecture)를 구축하였으며
+1. **마이크로서비스 아키텍처**(microservice architecture) 구축
+
+    + `Rstudio`와 `shiny server`가 설치된 [Docker](https://www.docker.com/what-docker) 이미지 제작
+    
+    + [Docker swarm](https://docs.docker.com/engine/swarm/)을 이용해 배포
+    
+    + 서버의 종류와 갯수에 구애받지 않음
 
 
-2. 동적 프록시 서버(dynamic proxy server) 프로그램인 [Traefik](https://traefik.io/) 을 이용하여  서비스가 추가될 때 마다(ex: 홈페이지, Jupyter) 이에 맞추어 **https** 보안이 적용된 **subdomain 주소**를 부여하였습니다.
+2. **https** 보안이 적용된 **subdomain 주소** 부여 
 
+    + 동적 프록시 서버(dynamic proxy server) 프로그램인 [Traefik](https://traefik.io/) 이용
+    
+    
+    + 서비스가 추가될 때 마다(ex: 홈페이지, Jupyter) 자동 적용.
+    
 
-3. 흔히 이용되는 의학통계 방법들을 `ShinyApps` 로 만들어 위의 환경에 배포하였으며, 모든 앱에는 논문/보고서용 테이블과 그림을 위해 **데이터 라벨(label) 정보**를 적용하였습니다.
+3. `ShinyApps`
 
+    + 흔히 이용되는 의학통계 방법들을 `ShinyApps` 로 만들어 위의 환경에 배포
+    
+    
+    + **데이터 라벨(label) 정보** 활용 - 라벨이 적용된 논문용 테이블/그림 
+    
 
 
 # 1. 마이크로서비스 아키텍처 
@@ -68,7 +84,7 @@ include_graphics("https://funshop.akamaized.net/products/0000045775/HF-INLUGGAGE
 
 장점
 
-1. 깔끔하다.
+1. **깔끔하다.**
 
 2. 치우기 쉽다. 
 
@@ -91,7 +107,7 @@ include_graphics("https://funshop.akamaized.net/products/0000045775/HF-INLUGGAGE
 
 장점
 
-1. 깔끔하다.
+1. **깔끔하다.**
 
 2. 삭제가 쉽다. 
 
@@ -116,10 +132,12 @@ include_graphics("https://funshop.akamaized.net/products/0000045775/HF-INLUGGAGE
 
 - 빠르고 용량이 적은 가상머신?
 - [Docker hub](https://hub.docker.com/)을 통해 [github](https://github.com/)처럼 이용가능.  
-- 서버에 rstudio 설치(X), 서버에  rstudio가 설치된 리눅스 이미지를 설치(O). 
+    + [github](https://github.com/)과 연계 가능 
+    + [github](https://github.com/)에 이미지 제작 코드 저장하면 [Docker hub](https://hub.docker.com/)에 실제 이미지가 저장
 
-```{r, out.width= "50%", fig.cap = "https://subicura.com/2017/01/19/docker-guide-for-beginners-1.html"}
-include_graphics("https://subicura.com/assets/article_images/2017-01-19-docker-guide-for-beginners-1/vm-vs-docker.png")
+
+```{r, out.width= "60%", fig.cap = "https://doi.org/10.1371/journal.pone.0152686"}
+include_graphics("https://journals.plos.org/plosone/article/figure/image?size=large&id=10.1371/journal.pone.0152686.g002")
 ```
 
 
@@ -136,10 +154,133 @@ include_graphics("http://edu.delestra.com/docker-slides/img/docker_hub_auto_buil
 
 
 
+# rshiny DockerFile
+
+```shell
+FROM ubuntu:latest
+
+RUN sed -i 's/archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list && \
+    sed -i 's/security.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list  && \
+    sed -i 's/extras.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list
+
+MAINTAINER Jinseob Kim "jinseob2kim@gmail.com"
+
+# Setup apt to be happy with no console input
+ENV DEBIAN_FRONTEND noninteractive
+
+
+# Install dependencies and Download 
+RUN apt-get update && apt-get install -y \
+    udev \
+    locales \
+    software-properties-common \
+    file \
+    curl \
+    git \
+    sudo \
+    wget \
+    gdebi-core \
+    vim \
+    psmisc \
+    tzdata \
+    libxml2-dev \
+    libcairo2-dev \
+    libgit2-dev \
+    tk-table \
+    libcurl4-gnutls-dev \
+    libssl-dev \
+    libxt-dev \
+    supervisor && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Prevent bugging us later about timezones
+RUN ln -fs /usr/share/zoneinfo/Asia/Seoul /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
+
+# Use UTF-8
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+
+
+# Update R -latest version
+RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu bionic-cran35/" | sudo tee -a /etc/apt/sources.list && \
+    gpg --keyserver keyserver.ubuntu.com --recv-key E084DAB9 && \
+    gpg -a --export E084DAB9 | sudo apt-key add - && \
+    apt-get update && \
+    apt-get install -y r-base r-base-dev
+
+# Install Rstudio-server
+ARG RSTUDIO_VERSION
+
+RUN RSTUDIO_LATEST=$(wget --no-check-certificate -qO- https://s3.amazonaws.com/rstudio-server/current.ver) && \ 
+    [ -z "$RSTUDIO_VERSION" ] && RSTUDIO_VERSION=$RSTUDIO_LATEST || true && \
+    wget -q http://download2.rstudio.org/rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
+    dpkg -i rstudio-server-${RSTUDIO_VERSION}-amd64.deb && \
+    rm rstudio-server-*-amd64.deb 
+
+
+# Install Shiny server
+RUN wget --no-verbose https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-14.04/x86_64/VERSION -O "version.txt" && \
+    VERSION=$(cat version.txt)  && \
+    wget --no-verbose "https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubuntu-14.04/x86_64/shiny-server-$VERSION-amd64.deb" -O ss-latest.deb && \
+    gdebi -n ss-latest.deb && \
+    rm -f version.txt ss-latest.deb && \
+    R -e "install.packages(c('shiny', 'rmarkdown', 'DT', 'data.table', 'ggplot2', 'devtools', 'epiDisplay', 'tableone', 'svglite', 'plotROC', 'pROC', 'labelled', 'geepack', 'lme4', 'PredictABEL', 'shinythemes', 'maxstat', 'manhattanly', 'Cairo', 'future', 'promises', 'GGally', 'fst', 'blogdown', 'metafor', 'roxygen2'), repos='https://cran.rstudio.com/')" && \
+    R -e "devtools::install_github(c('jinseob2kim/jstable', 'jinseob2kim/jskm', 'emitanaka/shinycustomloader', 'Appsilon/shiny.i18n', 'metrumresearchgroup/sinew'))" 
+    
+
+
+## User setting
+COPY ini.sh /etc/ini.sh
+
+
+## Github
+RUN git config --system credential.helper 'cache --timeout=3600' && \ 
+    git config --system push.default simple 
+
+
+## Multiple run
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+RUN mkdir -p /var/log/supervisor \
+	&& chmod 777 -R /var/log/supervisor
+
+
+EXPOSE 8787 3838 
+
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"] 
+```
+
+
+# [Rocker project](https://www.rocker-project.org/)
+
+- `R` [Docker](https://www.docker.com/what-docker) image 모음.  
+
+```{r, out.width= "80%", fig.cap = "https://www.rocker-project.org/images/"}
+include_graphics("rocker.png")
+```
+
+- `shiny server` 의 한글 지원 문제로 자체 이미지 제작 결정. 
+
+
+
+# 개발환경 구축 컨셉 
+
+- 데이터: 로컬 컴퓨터, 개인 클라우드(ex: [드롭박스](https://www.dropbox.com), [S3](https://aws.amazon.com/ko/s3))
+
+- 코드: [github](https://github.com/)
+
+- 프로그램: [Docker hub](https://hub.docker.com/) 
+
+- 서버: 클라우드([AWS](https://aws.amazon.com/), [Azure](https://azure.microsoft.com/ko-kr/), [Digital ocean](https://www.digitalocean.com/)) or 자체 서버
+
+
+
 # [Docker](https://www.docker.com/what-docker) 이미지 실행
 
 ```shell
-docker run --rm -d -p 3838:3838 -p 8787:8787 \
+docker run --rm -d \ 
+    -p 3838:3838 -p 8787:8787 \
     -e USER=js -e PASSWORD=js -e ROOT=TRUE\
     jinseob2kim/docker-rshiny
 ```
@@ -156,12 +297,17 @@ docker run --rm -d -p 3838:3838 -p 8787:8787 \
 - [Docker hub](https://hub.docker.com/) 주소 : **jinseob2kim/docker-rshiny**
 
 
+로컬 컴퓨터 -  http://localhost:8787, http://localhost:3838 로 접속. 서버 - **Your IP**:8787, **Your IP**:3838
+
+
 
 # 서버의 갯수?
 
-> 서버의 **종류와 갯수**에 구애받지 않는  **마이크로서비스 아키텍처**(microservice architecture)를 구축하였으며...
+> 서버의 **종류와 갯수**에 구애받지 않는  **마이크로서비스 아키텍처**(microservice architecture)...
 
-서버의 **갯수에 구애받지 않는다?** [Docker](https://www.docker.com/what-docker) 만으로는 불가능. 
+- 윈도우 서버, 맥에서도 [Docker](https://www.docker.com/what-docker) 설치하고 이미지 실행 가능.
+
+- 서버 **갯수에 구애받지 않는다?** [Docker](https://www.docker.com/what-docker) 만으로는 불가능. 
 
 ```{r, out.width= "70%", fig.cap = "https://www.penflip.com/akira.ohio/appcatalyst-hands-on-lab-en/blob/master/images/docker-ppt-swarm-1.png/?raw=true"}
 include_graphics("https://www.penflip.com/akira.ohio/appcatalyst-hands-on-lab-en/blob/master/images/docker-ppt-swarm-1.png/?raw=true")
@@ -172,18 +318,29 @@ include_graphics("https://www.penflip.com/akira.ohio/appcatalyst-hands-on-lab-en
 # [Docker swarm](https://docs.docker.com/engine/swarm/) 
 
 - **Server orchestration**: 지휘자가 오케스트라 연주하듯이
+
 - 여러대의 서버를 묶어 **마치 하나의 서버**를 이용하는 것처럼 느낌. 
+
+- [Docker](https://www.docker.com/what-docker) 에 내장되어 별다른 설치 필요없음. 
+
+- 비슷한 프로그램으로 구글의 [Kubernetes](https://kubernetes.io/)
 
 ```{r, out.width= "70%", fig.cap = "https://www.upcloud.com/support/docker-swarm-orchestration/" }
 include_graphics("https://www.upcloud.com/support/wp-content/uploads/2016/10/Docker-Swarm-Orchestration-1024x265.png")
 ```
 
-- [Docker](https://www.docker.com/what-docker) 이미지를 실행하면 자동으로 한가한 서버에 배치. 
-- [Docker](https://www.docker.com/what-docker) 에 내장되어 별다른 설치 필요없음. 
-- 비슷한 프로그램으로 구글의 [Kubernetes](https://kubernetes.io/)
 
+# 과정 
 
+1. 서버들에 [Docker](https://www.docker.com/what-docker) 설치
 
+2. 서버들을 묶음: **manager** 서버와 **worker** 서버.
+
+3. **manager** 서버에서 [Docker](https://www.docker.com/what-docker) 이미지를 실행하면 자동으로 한가한 서버에 배치. 
+
+4. 어떤 서버 주소로 접속해도 실행 가능. 
+    + **manager IP**:8787, **worker IP**:8787 모두 OK
+    
 
 
 # Manager & worker node
@@ -193,15 +350,20 @@ include_graphics("https://pbs.twimg.com/media/DP5VZC8UIAAnV6j.jpg:large")
 ```
 
 
+# 어떤 IP로 접속해도 실행 가능
 
+```{r, out.width= "50%", fig.cap = "http://callistaenterprise.se/assets/blogg/docker/docker-in-swarm-mode-on-docker-in-docker/docker-swarm.png"}
+include_graphics("http://callistaenterprise.se/assets/blogg/docker/docker-in-swarm-mode-on-docker-in-docker/docker-swarm.png")
+```
+  
 
 # 예: [Docker swarm](https://docs.docker.com/engine/swarm/) 으로 서버 2개 묶기
 
-2개 서버: **manager, worker** node
+> [Docker](https://www.docker.com/what-docker)가 설치된 2개 서버: **manager, worker** node 
 
+In **manager** node
 
-
-1. Init Docker Swarm mode: In **manager** node
+1. Init Docker Swarm mode
 
 ```shell
 manger_ip = $(123.456.789.10)
@@ -217,16 +379,18 @@ worker_token=$(docker swarm join-token worker -q)
 ```
 
 
+In **worker** node
 
-3. Join worker nodes: In **worker** node
+3. Join worker nodes
 
 ```shell
 docker swarm join --token $worker_token $manager_ip:2377
 ````
 
 
-
 https://www.youtube.com/watch?v=2RQbpnRxx-Y
+
+
 
 
 # 주의 (1) - Port setting for swarm 
@@ -279,20 +443,18 @@ datatable(inbound_worker, rownames = F, caption = "Inbound to Swarm Workers", op
 
 # 서비스 실행: rstudio & shiny server
 
-자체적으로 이미지 [docker-rshiny](https://hub.docker.com/r/jinseob2kim/docker-rshiny/) 를 만들어 사용하였다.
+자체 이미지 [docker-rshiny](https://hub.docker.com/r/jinseob2kim/docker-rshiny/) 
 
 ```shell
 docker service create \
-    --name rshiny \
     --publish 8787:8787 \
     --publish 3838:3838 \ 
     -e USER=js -e PASSWORD=js -e ROOT=TRUE \
-     jinseob2kim/docker-rshiny
+    --name rshiny \
+    jinseob2kim/docker-rshiny
 ```
 
-Manger node와 worker node 주소 모두에서 **8787** 포트로 `rstudio server`를, **3838** 포트로 `shiny server`를 실행할 수 있다. 
-
-- Worker node에 [docker-rshiny](https://hub.docker.com/r/jinseob2kim/docker-rshiny/) 가 설치되었더라도 manager node에서 실행할 수 있다. 
+- `rstudio server`: **Both IP**:8787, `shiny server`: **Both IP**:3838
 
 
 추가: [tensorflow docker](https://hub.docker.com/r/tensorflow/tensorflow/) 실행 
@@ -304,17 +466,12 @@ docker service create \
      tensorflow/tensorflow
 ```
 
-# 
-어떤 ip로 접속해도 실행 가능
-
-```{r, out.width= "50%", fig.cap = "http://callistaenterprise.se/assets/blogg/docker/docker-in-swarm-mode-on-docker-in-docker/docker-swarm.png"}
-include_graphics("http://callistaenterprise.se/assets/blogg/docker/docker-in-swarm-mode-on-docker-in-docker/docker-swarm.png")
-```
+- **Both IP**:8888
 
 
 # 사용자가 늘어나면?
 
-`docker service scale` 명령어 이용 
+`docker service scale` 명령어 이용, 여러 서버에 이미지 설치. 
 
 ```shell
 docker service scale rshiny=2
@@ -332,16 +489,20 @@ docker service scale rshiny=1
 # 옵션: [Docker-machine](https://docs.docker.com/machine/overview/)
 
 - 여러 대의 서버(docker가 설치된)를 로컬 컴퓨터에서 한 번에 관리할 수 있음. 
-- 클라우드 지원: 예) AWS 서버 2대 불러오기, 서버 삭제하기
 
-```{r, out.width= "70%"}
+- 클라우드 지원
+    + ex) AWS 서버 2대 불러오기, 서버 삭제하기
+    
+- **2376** port 오픈 필요.
+
+```{r, out.width= "60%", fig.cap = "https://docs.docker.com/machine/overview/#whats-the-difference-between-docker-engine-and-docker-machine"}
 include_graphics("https://docs.docker.com/machine/img/machine-mac-win.png")
 include_graphics("https://docs.docker.com/machine/img/provision-use-case.png")
 ```
 
-- **2376** 포트 오픈 필요.
 
-https://docs.docker.com/machine/overview/#whats-the-difference-between-docker-engine-and-docker-machine"
+
+
 
 # [Docker-machine](https://docs.docker.com/machine/overview/) 설치
 
@@ -352,7 +513,7 @@ sudo install /tmp/docker-machine /usr/local/bin/docker-machine
 docker-machine version
 ```
 
-# 예: Digital ocean - manager 이름으로 서버 생성.   
+# 예: Digital ocean - manager 이름으로 서버 생성 
 
 - **TOKEN** 정보 필요 
 
@@ -375,7 +536,7 @@ done
 ```
 
 
-# AWS
+# AWS 
 
 - **ACCESS_KEY_ID, SECRET_ACCESS_KEY, VPC_ID** 필요
 - 포트 따로 열어줘야 됨.
@@ -414,7 +575,7 @@ docker-machine create \
 done
 ```
 
-# AZURE
+# AZURE 
 
 - **Subscription id** 필요
 - 포트 따로 열어줘야 됨.
@@ -447,7 +608,7 @@ done
 
 
 
-# 묶을 서버 추가오기 : Worker node 
+# 묶을 서버 추가오기 : worker node 
 
 ```shell
 export DIGITALOCEAN_SIZE="s-1vcpu-1gb"
@@ -509,29 +670,27 @@ eval $(docker-machine env -u)
 
 # Problem
 
-- DOMAINNAME:3838, :8787 보여주기 싫다. `/server`, `/app` 으로는 안되나?
-
+- DOMAINNAME:3838, :8787 보여주기 싫다. 
+    + `/server`, `/app` 으로는 안되나?
+    + `server.DOMAINNAME`, `app.DOMAINNAME` 은?
 
 **리버스 프록시(reverse proxy)** 프로그램이 필요하다. 
 
-- [nginx](https://nginx.org/en/) 가 대표적.
+- [nginx](https://nginx.org/en/) 로 `/server`, `/app` 가능. 
 
-```{r, out.width= "40%"}
+```{r, out.width= "40%", fig.cap = "https://diarmuid.ie/media/nginx-docker-reverse-proxy.png"}
 include_graphics("https://diarmuid.ie/media/nginx-docker-reverse-proxy.png")
 ```
-
-https://diarmuid.ie/media/nginx-docker-reverse-proxy.png
 
 
 
 # Problem: [nginx](https://nginx.org/en/)
 
-1. [Docker](https://www.docker.com/what-docker) 와 궁합이 안좋다. 
+1. [Docker](https://www.docker.com/what-docker) 와 궁합이 안좋다?
 
-- 서비스 실행해서 포트 추가될 때마다 일일히 주소 적용해줘야됨. 
+- 서비스 실행해서 포트 추가될 때마다 일일히 주소 적용해줘야..
 
 - [Docker swarm](https://docs.docker.com/engine/swarm/) 과는 더 안좋다. 
-
 
 
 2. `https` 적용 불가능 
@@ -542,6 +701,11 @@ https://diarmuid.ie/media/nginx-docker-reverse-proxy.png
 
 
 [`HTTP` 구글 크롬서 퇴출 수순…7월부터 "안전하지 않다" 경고](http://news.mk.co.kr/newsRead.php?sc=30000037&year=2018&no=129224)
+
+
+3. **Subdomain** 불가능
+
+- `server.DOMAINNAME`, `app.DOMAINNAME` 불가능. 
 
 
 
@@ -582,12 +746,11 @@ include_graphics("domain_wild.jpg")
 
 
 
-#
-2. [Traefik](https://traefik.io/) 용 network 만들기
+# 2. [Traefik](https://traefik.io/) 용 network 만들기
 
 ```shell
+# Run in manager node
 eval $(docker-machine env manager1)
-DOMAINNAME="anpanman.co.kr"
 
 # Create network for swarm
 docker network create --driver=overlay traefik-net
@@ -595,11 +758,7 @@ docker network create --driver=overlay traefik-net
 
 
 
-
-
-# 
-
-3. [Let's Encrypt](https://letsencrypt.org/) 설정
+# 3. [Let's Encrypt](https://letsencrypt.org/) 설정
 
 - 빈 **acme.json** 파일을 만든다 (읽기쓰기 가능).
 
@@ -607,7 +766,7 @@ docker network create --driver=overlay traefik-net
 
 ```shell
 # For Let's Encrypt
-docker-machine ssh manager1 "DOMAINNAME=anpanman.co.kr && \ 
+docker-machine ssh manager1 "DOMAINNAME=<YOUR DOMAIN> && \ 
                              mkdir /home/js/opt && \ 
                              mkdir /home/js/opt/traefik && \
                              cd /home/js/opt/traefik && \
@@ -617,11 +776,53 @@ docker-machine ssh manager1 "DOMAINNAME=anpanman.co.kr && \
 
 
 
-#
-
-4. Run [Traefik](https://traefik.io/)
+# traefik.toml
 
 ```shell
+defaultEntryPoints = ["http", "https"]
+
+logLevel = "INFO"
+
+[api]
+dashboard = true
+address = ":8080"
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+      entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.redirect]
+      regex = "^https://<YOUR DOMAIN>/(.*)"
+      replacement = "https://www.<YOUR DOMAIN>/$1"
+      permanent = true
+    [entryPoints.https.tls]  
+
+
+[acme]
+email = "<YOUR E-MAIL>"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+onDemand = false
+
+
+## *.<YOUR DOMAIN> & <YOUR DOMAIN> should be in DNS "A or CNAME": digitalocean case.
+[acme.dnsChallenge]
+  provider = "digitalocean"
+  delayBeforeCheck = 0 
+```
+
+
+
+# 4. Run [Traefik](https://traefik.io/)
+
+```shell
+eval $(docker-machine env manager1)
+DOMAINNAME="<YOUR DOMAIN>"
+
 # Create traefik service
 docker service create \
     --name traefik \
@@ -642,7 +843,7 @@ docker service create \
     --docker.domain=$DOMAINNAME
 ```
 
-https://monitor.anpanman.co.kr 에서 dashboard를 볼 수 있다.
+https://monitor.<YOUR DOMAIN> 에서 dashboard를 볼 수 있다.
 
 
 
@@ -655,13 +856,13 @@ docker service create \
     --name rshiny \
     --label traefik.shiny.port=3838 \
     --label traefik.rstudio.port=8787 \
-    --label traefik.shiny.frontend.rule="Host:app.anpanman.co.kr" \
-    --label traefik.rstudio.frontend.rule="Host:server.anpanman.co.kr" \
+    --label traefik.shiny.frontend.rule="Host:app.$DOMAINNAME" \
+    --label traefik.rstudio.frontend.rule="Host:server.$DOMAINNAME" \
     -e USER=js -e PASSWORD=js -e ROOT=TRUE \
     --network traefik-net \
      jinseob2kim/docker-rshiny
 ```
-https://server.anpanman.co.kr 에서 'rstudio server'를, https://app.anpanman.co.kr 에서 'shiny server'를 실행할 수 있다. 
+https://server.<YOUR DOMAIN> 에서 'rstudio server'를, https://app.<YOUR DOMAIN> 에서 'shiny server'를 실행할 수 있다. 
 
 
 
@@ -678,7 +879,7 @@ docker service create \
     --network traefik-net \
     nginx 
 ```
-https://anpanman.co.kr, https://www.anpanman.co.kr 에서 [nginx](https://www.nginx.com/) 실행환경을 볼 수 있다. 
+https://<YOUR DOMAIN>, https://www.<YOUR DOMAIN> 에서 [nginx](https://www.nginx.com/) 실행환경을 볼 수 있다. 
 
 
 # 중간 정리 
@@ -696,6 +897,30 @@ https://anpanman.co.kr, https://www.anpanman.co.kr 에서 [nginx](https://www.ng
 6. [Let's Encrypt](https://letsencrypt.org/) 을 통한 **https** 인증이 자동으로 적용된다. 
 
 
+# 사용 후기: (9월 말)
+
+1. [Docker swarm](https://docs.docker.com/engine/swarm/) 은 오버.
+
+    + 서비스 24시간 계속 실행 필요?
+    
+    + 서버 하나 먹통되더라도 서비스 유지 필수?
+    
+    + 대규모 프로젝트?
+    
+ 
+
+2. 가내수공업은 [Docker](https://www.docker.com/what-docker) 로 충분.
+
+
+현재 
+
+- [docker-rshiny](https://hub.docker.com/r/jinseob2kim/docker-rshiny/)는 자체 서버 1대에서 실행
+
+- [홈페이지](https://www.anpanman.co.kr/)와 [블로그](https://blog.anpanman.co.kr/)는 [github](https://github.com/)에 코드, [netlify](https://www.netlify.com/)로 무료 호스팅. - **https** 무료 
+
+
+
+    
 
 # 3. 의학연구용 `ShinyApps` 만들기 
 
@@ -851,7 +1076,7 @@ cat(m0$last.line)
 include_graphics("cox.jpg")
 ```
 
-- **GEE, linear mixed model, GLMM** : 자체 패키지 [`jstable`](https://github.com/jinseob2kim/jstable) 로 결과테이블 생성
+- **GEE, mixed model, GLMM, mixed effect Cox** : 자체 패키지 [`jstable`](https://github.com/jinseob2kim/jstable) 로 결과테이블 생성
 
 - **Label** 정보 적용.
 
