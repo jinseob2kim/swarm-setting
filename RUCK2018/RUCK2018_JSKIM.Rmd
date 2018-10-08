@@ -766,7 +766,7 @@ docker network create --driver=overlay traefik-net
 
 ```shell
 # For Let's Encrypt
-docker-machine ssh manager1 "DOMAINNAME=<YOUR DOMAIN> && \ 
+docker-machine ssh manager1 "DOMAINNAME=anpanman.co.kr && \ 
                              mkdir /home/js/opt && \ 
                              mkdir /home/js/opt/traefik && \
                              cd /home/js/opt/traefik && \
@@ -795,21 +795,21 @@ address = ":8080"
   [entryPoints.https]
   address = ":443"
     [entryPoints.https.redirect]
-      regex = "^https://<YOUR DOMAIN>/(.*)"
-      replacement = "https://www.<YOUR DOMAIN>/$1"
+      regex = "^https://anpanman.co.kr/(.*)"
+      replacement = "https://www.anpanman.co.kr/$1"
       permanent = true
     [entryPoints.https.tls]  
 
 
 [acme]
-email = "<YOUR E-MAIL>"
+email = "jinseob2kim@gmail.com"
 storage = "acme.json"
 entryPoint = "https"
 onHostRule = true
 onDemand = false
 
 
-## *.<YOUR DOMAIN> & <YOUR DOMAIN> should be in DNS "A or CNAME": digitalocean case.
+## *.anpanman.co.kr & anpanman.co.kr should be in DNS "A or CNAME": digitalocean case.
 [acme.dnsChallenge]
   provider = "digitalocean"
   delayBeforeCheck = 0 
@@ -821,7 +821,7 @@ onDemand = false
 
 ```shell
 eval $(docker-machine env manager1)
-DOMAINNAME="<YOUR DOMAIN>"
+DOMAINNAME="anpanman.co.kr"
 
 # Create traefik service
 docker service create \
@@ -843,7 +843,7 @@ docker service create \
     --docker.domain=$DOMAINNAME
 ```
 
-https://monitor.<YOUR DOMAIN> 에서 dashboard를 볼 수 있다.
+https://monitor.anpanman.co.kr 에서 `dashboard`를 볼 수 있다.
 
 
 
@@ -862,7 +862,7 @@ docker service create \
     --network traefik-net \
      jinseob2kim/docker-rshiny
 ```
-https://server.<YOUR DOMAIN> 에서 'rstudio server'를, https://app.<YOUR DOMAIN> 에서 'shiny server'를 실행할 수 있다. 
+https://server.anpanman.co.kr 에서 `rstudio server`를, https://app.anpanman.co.kr 에서 `shiny server`를 실행할 수 있다. 
 
 
 
@@ -879,7 +879,7 @@ docker service create \
     --network traefik-net \
     nginx 
 ```
-https://<YOUR DOMAIN>, https://www.<YOUR DOMAIN> 에서 [nginx](https://www.nginx.com/) 실행환경을 볼 수 있다. 
+https://anpanman.co.kr, https://www.anpanman.co.kr 에서 [nginx](https://www.nginx.com/) 실행환경을 볼 수 있다. 
 
 
 # 중간 정리 
@@ -1116,6 +1116,7 @@ include_graphics("https://cdn-ak.f.st-hatena.com/images/fotolife/k/ksmzn/2017120
 4. [이완기 압력 계산: 삼성서울병원](http://147.47.68.165:2222/chkh/dPR)
 
 5. [다중 언어: 한/영](http://147.47.68.165:2222/shiny.i18n)
+
 
 # Q & A {.bigger}
 
