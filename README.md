@@ -1,6 +1,13 @@
 # swarm-setting
 [Docker swarm](https://docs.docker.com/engine/swarm/) development environment for customized medical study app.
 
+[![GitHub issues](https://img.shields.io/github/issues/jinseob2kim/swarm-setting.svg)](https://github.com/jinseob2kim/swarm-setting/issues)
+[![GitHub forks](https://img.shields.io/github/forks/jinseob2kim/swarm-setting.svg)](https://github.com/jinseob2kim/swarm-setting/network)
+[![GitHub stars](https://img.shields.io/github/stars/jinseob2kim/swarm-setting.svg)](https://github.com/jinseob2kim/swarm-setting/stargazers)
+[![GitHub license](https://img.shields.io/github/license/jinseob2kim/swarm-setting.svg)](https://github.com/jinseob2kim/swarm-setting/blob/master/LICENSE)
+[![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg)](https://github.com/jinseob2kim/swarm-setting)
+[![GitHub contributors](https://img.shields.io/github/contributors/jinseob2kim/swarm-setting.svg?maxAge=2592000)](https://github.com/jinseob2kim/swarm-setting/graphs/contributors)
+
 ## Intall docker-machine
 [docker-machine](https://docs.docker.com/machine/overview/)을 활용하여 [docker](https://www.docker.com/what-docker)가 설치된 클라우드 컴퓨터를 쉽게 생성할 수 있다.
 
