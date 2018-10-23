@@ -726,11 +726,11 @@ https://ian-says.com/articles/traefik-proxy-docker-lets-encrypt/
 
 # Overview [Traefik](https://traefik.io/) 
 
-```{r, out.width= "90%"}
-include_graphics("https://i2.wp.com/codersdiary.me/wp-content/uploads/2017/03/drawit-diagram-7.png?w=1382&ssl=1")
+```{r, out.width= "90%", fig.cap = "https://hub.docker.com/r/ghiltoniel/traefik-react/"}
+include_graphics("https://image.ibb.co/enAZi5/Sans_titre.png")
 ```
 
-https://codersdiary.me/en/2017/04/01/reverse-proxy-and-docker-containers/
+
 
 
 
@@ -1060,7 +1060,7 @@ include_graphics("https://github.com/kaz-yos/tableone/raw/master/tableone.gif")
 ```{r, echo= T, eval = F}
 library(epiDisplay)
 model0 <- glm(case ~ induced + spontaneous, family=binomial, data=infert)
-logistic.display(model0, crude = T, crude.p.value = T)
+logistic.display(model0, crude = T, crude.p.value = T)$table
 ```
 
 ```{r}
@@ -1093,12 +1093,28 @@ include_graphics("cox.jpg")
 include_graphics("km.jpg")
 ```
 
+# `Shiny module` and `Rstudio addin`
+
+[`jsmodule`](https://github.com/jinseob2kim/jsmodule)
+
+- 자주 쓰는 `Shiny module` 을 저장.
+
+- `Rstudio addin` : basic, propenstity score analysis
+
+#
+
+```{r, out.width= "100%", fig.cap = "Rstudio addin: propensity score analysis"}
+include_graphics("propensity.gif")
+```
+
+
+
 
 # 다중언어 지원 
 
 - [`shiny.i18n`](https://github.com/Appsilon/shiny.i18n) 패키지
 
-```{r, out.width= "70%", fig.cap = "https://cdn-ak.f.st-hatena.com/images/fotolife/k/ksmzn/20171209/20171209204102.gif"}
+```{r, out.width= "90%", fig.cap = "https://cdn-ak.f.st-hatena.com/images/fotolife/k/ksmzn/20171209/20171209204102.gif"}
 include_graphics("https://cdn-ak.f.st-hatena.com/images/fotolife/k/ksmzn/20171209/20171209204102.gif")
 ```
 
@@ -1107,15 +1123,19 @@ include_graphics("https://cdn-ak.f.st-hatena.com/images/fotolife/k/ksmzn/2017120
 
 # Examples 
 
-1. [기본 앱 모음](http://147.47.68.165:2222/navbar)
+1. [범용 기초통계 앱](http://147.47.68.165:2222/basic)
 
-2. [건강설문조사 리포트](http://147.47.68.165:2222/health-report)
+2. [범용 Propensity score 분석앱](http://147.47.68.165:2222/ps)
 
-3. [대장암 환자 연구: 강릉아산병원](http://147.47.68.165:2222/yschoi)
+3. [건강설문조사 리포트](http://147.47.68.165:2222/health-report)
 
-4. [이완기 압력 계산: 삼성서울병원](http://147.47.68.165:2222/chkh/dPR)
+4. [대장암 환자 연구: 강릉아산병원](http://147.47.68.165:2222/yschoi)
 
-5. [다중 언어: 한/영](http://147.47.68.165:2222/shiny.i18n)
+5. [이완기 압력 계산: 삼성서울병원](http://147.47.68.165:2222/chkh/dPR)
+
+6. [심장질환 위험인자 연구: 계명대 동산의료원](http://147.47.68.165:2222/ds010042/REFERRAL/)
+
+7. [다중 언어: 한/영](http://147.47.68.165:2222/shiny.i18n)
 
 
 # Q & A {.bigger}
