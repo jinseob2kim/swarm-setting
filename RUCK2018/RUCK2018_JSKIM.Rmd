@@ -157,7 +157,7 @@ include_graphics("http://edu.delestra.com/docker-slides/img/docker_hub_auto_buil
 
 # rshiny DockerFile
 
-```shell
+```bash
 FROM ubuntu:latest
 
 RUN sed -i 's/archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list && \
@@ -279,7 +279,7 @@ include_graphics("rocker.png")
 
 # [Docker](https://www.docker.com/what-docker) 이미지 실행
 
-```shell
+```bash
 docker run --rm -d \ 
     -p 3838:3838 -p 8787:8787 \
     -e USER=js -e PASSWORD=js -e ROOT=TRUE\
@@ -366,7 +366,7 @@ In **manager** node
 
 1. Init Docker Swarm mode
 
-```shell
+```bash
 manger_ip = $(123.456.789.10)
 docker swarm init --advertise-addr $manager_ip
 ```
@@ -375,7 +375,7 @@ docker swarm init --advertise-addr $manager_ip
 
 2. Get Swarm tokens
 
-```shell
+```bash
 worker_token=$(docker swarm join-token worker -q)
 ```
 
@@ -384,7 +384,7 @@ In **worker** node
 
 3. Join worker nodes
 
-```shell
+```bash
 docker swarm join --token $worker_token $manager_ip:2377
 ````
 
@@ -446,7 +446,7 @@ datatable(inbound_worker, rownames = F, caption = "Inbound to Swarm Workers", op
 
 자체 이미지 [docker-rshiny](https://hub.docker.com/r/jinseob2kim/docker-rshiny/) 
 
-```shell
+```bash
 docker service create \
     --publish 8787:8787 \
     --publish 3838:3838 \ 
@@ -460,7 +460,7 @@ docker service create \
 
 추가: [tensorflow docker](https://hub.docker.com/r/tensorflow/tensorflow/) 실행 
 
-```shell
+```bash
 docker service create \
     --name tf \
     --publish 8888:8888\
@@ -474,13 +474,13 @@ docker service create \
 
 `docker service scale` 명령어 이용, 여러 서버에 이미지 설치. 
 
-```shell
+```bash
 docker service scale rshiny=2
 ```
 
 다시 줄이기 
 
-```shell
+```bash
 docker service scale rshiny=1
 ```
 
@@ -507,7 +507,7 @@ include_graphics("https://docs.docker.com/machine/img/provision-use-case.png")
 
 # [Docker-machine](https://docs.docker.com/machine/overview/) 설치
 
-```shell
+```bash
 base=https://github.com/docker/machine/releases/download/v0.15.0 &&
 curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
 sudo install /tmp/docker-machine /usr/local/bin/docker-machine
@@ -518,7 +518,7 @@ docker-machine version
 
 - **TOKEN** 정보 필요 
 
-```shell
+```bash
 export DIGITALOCEAN_ACCESS_TOKEN=<YOUR_DIGITALOCEAN_ACCESS_TOKEN>
 export DIGITALOCEAN_IMAGE="ubuntu-18-04-x64"
 export DIGITALOCEAN_REGION="sgp1"
@@ -542,7 +542,7 @@ done
 - **ACCESS_KEY_ID, SECRET_ACCESS_KEY, VPC_ID** 필요
 - 포트 따로 열어줘야 됨.
 
-```shell
+```bash
 export AWS_ACCESS_KEY_ID=<YOUR_AWS_ACEESS_KEY_ID>
 export AWS_SECRET_ACCESS_KEY=<YOUR_AWS_SECRET_ACCESS_KEY>
 export AWS_INSTANCE_TYPE="t2.micro" 
@@ -581,7 +581,7 @@ done
 - **Subscription id** 필요
 - 포트 따로 열어줘야 됨.
 
-```shell
+```bash
 export sub=<YOUR_AZURE_SUBSCRIPTION_VALUE>
 
 for c in {1..1} ; do
@@ -611,7 +611,7 @@ done
 
 # 묶을 서버 추가오기 : worker node 
 
-```shell
+```bash
 export DIGITALOCEAN_SIZE="s-1vcpu-1gb"
 echo "### Creating worker nodes ..."
 for c in {1..1} ; do
@@ -631,7 +631,7 @@ done
 
 **manager1** 과 **worker1** 노드를 [docker swarm](https://docs.docker.com/engine/swarm/)를 활용하여 묶자. 
 
-```shell
+```bash
 # Get IP from leader node
 leader_ip=$(docker-machine ip manager1)
 
@@ -749,7 +749,7 @@ include_graphics("domain_wild.jpg")
 
 # 2. [Traefik](https://traefik.io/) 용 network 만들기
 
-```shell
+```bash
 # Run in manager node
 eval $(docker-machine env manager1)
 
@@ -765,7 +765,7 @@ docker network create --driver=overlay traefik-net
 
 - 세부 설정이 담긴 **traefik.toml** 을 만든다.
 
-```shell
+```bash
 # For Let's Encrypt
 docker-machine ssh manager1 "DOMAINNAME=anpanman.co.kr && \ 
                              mkdir /home/js/opt && \ 
@@ -779,7 +779,7 @@ docker-machine ssh manager1 "DOMAINNAME=anpanman.co.kr && \
 
 # traefik.toml
 
-```shell
+```bash
 defaultEntryPoints = ["http", "https"]
 
 logLevel = "INFO"
@@ -820,7 +820,7 @@ onDemand = false
 
 # 4. Run [Traefik](https://traefik.io/)
 
-```shell
+```bash
 eval $(docker-machine env manager1)
 DOMAINNAME="anpanman.co.kr"
 
@@ -852,7 +852,7 @@ https://monitor.anpanman.co.kr 에서 `dashboard`를 볼 수 있다.
 
 [Traefik](https://traefik.io/) 를 적용하여 재실행하자. 
 
-```shell
+```bash
 docker service create \
     --name rshiny \
     --label traefik.shiny.port=3838 \
@@ -872,7 +872,7 @@ https://server.anpanman.co.kr 에서 `rstudio server`를, https://app.anpanman.c
 proxy server 프로그램인 [nginx](https://www.nginx.com/)의 [docker image](https://hub.docker.com/_/nginx/) 를 이용하였고, [blogdown 패키지](https://github.com/rstudio/blogdown) 를 활용해서 홈페이지를 만들었다. 
 
 
-```shell
+```bash
 docker service create \
     --name nginx \
     --label traefik.port=80 \

@@ -14,10 +14,6 @@ output:
     highlight: tango
     keep_md: yes
     theme: readable
-  beamer_presentation:
-    highlight: tango
-  ioslides_presentation:
-    highlight: tango
 subtitle: ANPANMAN Co.,Ltd.
 editor_options:
   chunk_output_type: console
@@ -160,7 +156,7 @@ editor_options:
 
 # rshiny DockerFile
 
-```shell
+```bash
 FROM ubuntu:latest
 
 RUN sed -i 's/archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list && \
@@ -283,7 +279,7 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 # [Docker](https://www.docker.com/what-docker) 이미지 실행
 
-```shell
+```bash
 docker run --rm -d \ 
     -p 3838:3838 -p 8787:8787 \
     -e USER=js -e PASSWORD=js -e ROOT=TRUE\
@@ -374,7 +370,7 @@ In **manager** node
 
 1. Init Docker Swarm mode
 
-```shell
+```bash
 manger_ip = $(123.456.789.10)
 docker swarm init --advertise-addr $manager_ip
 ```
@@ -383,7 +379,7 @@ docker swarm init --advertise-addr $manager_ip
 
 2. Get Swarm tokens
 
-```shell
+```bash
 worker_token=$(docker swarm join-token worker -q)
 ```
 
@@ -392,7 +388,7 @@ In **worker** node
 
 3. Join worker nodes
 
-```shell
+```bash
 docker swarm join --token $worker_token $manager_ip:2377
 ````
 
@@ -415,9 +411,9 @@ https://www.youtube.com/watch?v=2RQbpnRxx-Y
 
 # AWS Security Group Example
 
-<!--html_preserve--><div id="htmlwidget-7ba648a01d90a2eb643b" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7ba648a01d90a2eb643b">{"x":{"filter":"none","caption":"<caption>Inbound to Swarm Managers<\/caption>","data":[["Custom TCP Rule","Custom TCP Rule","Custom UDP Rule","Custom UDP Rule","Custom UDP Rule","Custom Protocol"],["TCP","TCP","UDP","UDP","UDP","50"],["2377","7946","7946","4789","4789","all"],["swarm + remote mgmt","swarm","swarm","swarm","swarm","swarm"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>TYPE<\/th>\n      <th>PROTOCOL<\/th>\n      <th>PORTS<\/th>\n      <th>SOURCE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve--><!--html_preserve--><div id="htmlwidget-b890bf19faba8937559b" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b890bf19faba8937559b">{"x":{"filter":"none","caption":"<caption>Inbound to Swarm Workers<\/caption>","data":[["Custom TCP Rule","Custom UDP Rule","Custom UDP Rule","Custom Protocol"],["TCP","UDP","UDP","50"],["7946","7946","4789","all"],["swarm","swarm","swarm","swarm"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>TYPE<\/th>\n      <th>PROTOCOL<\/th>\n      <th>PORTS<\/th>\n      <th>SOURCE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-db3b8aa079f97c90f6a6" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-db3b8aa079f97c90f6a6">{"x":{"filter":"none","caption":"<caption>Inbound to Swarm Managers<\/caption>","data":[["Custom TCP Rule","Custom TCP Rule","Custom UDP Rule","Custom UDP Rule","Custom UDP Rule","Custom Protocol"],["TCP","TCP","UDP","UDP","UDP","50"],["2377","7946","7946","4789","4789","all"],["swarm + remote mgmt","swarm","swarm","swarm","swarm","swarm"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>TYPE<\/th>\n      <th>PROTOCOL<\/th>\n      <th>PORTS<\/th>\n      <th>SOURCE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve--><!--html_preserve--><div id="htmlwidget-348b09c51138a9a9e3ac" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-348b09c51138a9a9e3ac">{"x":{"filter":"none","caption":"<caption>Inbound to Swarm Workers<\/caption>","data":[["Custom TCP Rule","Custom UDP Rule","Custom UDP Rule","Custom Protocol"],["TCP","UDP","UDP","50"],["7946","7946","4789","all"],["swarm","swarm","swarm","swarm"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>TYPE<\/th>\n      <th>PROTOCOL<\/th>\n      <th>PORTS<\/th>\n      <th>SOURCE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 
 
@@ -437,7 +433,7 @@ https://www.youtube.com/watch?v=2RQbpnRxx-Y
 
 자체 이미지 [docker-rshiny](https://hub.docker.com/r/jinseob2kim/docker-rshiny/) 
 
-```shell
+```bash
 docker service create \
     --publish 8787:8787 \
     --publish 3838:3838 \ 
@@ -451,7 +447,7 @@ docker service create \
 
 추가: [tensorflow docker](https://hub.docker.com/r/tensorflow/tensorflow/) 실행 
 
-```shell
+```bash
 docker service create \
     --name tf \
     --publish 8888:8888\
@@ -465,13 +461,13 @@ docker service create \
 
 `docker service scale` 명령어 이용, 여러 서버에 이미지 설치. 
 
-```shell
+```bash
 docker service scale rshiny=2
 ```
 
 다시 줄이기 
 
-```shell
+```bash
 docker service scale rshiny=1
 ```
 
@@ -501,7 +497,7 @@ docker service scale rshiny=1
 
 # [Docker-machine](https://docs.docker.com/machine/overview/) 설치
 
-```shell
+```bash
 base=https://github.com/docker/machine/releases/download/v0.15.0 &&
 curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
 sudo install /tmp/docker-machine /usr/local/bin/docker-machine
@@ -512,7 +508,7 @@ docker-machine version
 
 - **TOKEN** 정보 필요 
 
-```shell
+```bash
 export DIGITALOCEAN_ACCESS_TOKEN=<YOUR_DIGITALOCEAN_ACCESS_TOKEN>
 export DIGITALOCEAN_IMAGE="ubuntu-18-04-x64"
 export DIGITALOCEAN_REGION="sgp1"
@@ -536,7 +532,7 @@ done
 - **ACCESS_KEY_ID, SECRET_ACCESS_KEY, VPC_ID** 필요
 - 포트 따로 열어줘야 됨.
 
-```shell
+```bash
 export AWS_ACCESS_KEY_ID=<YOUR_AWS_ACEESS_KEY_ID>
 export AWS_SECRET_ACCESS_KEY=<YOUR_AWS_SECRET_ACCESS_KEY>
 export AWS_INSTANCE_TYPE="t2.micro" 
@@ -575,7 +571,7 @@ done
 - **Subscription id** 필요
 - 포트 따로 열어줘야 됨.
 
-```shell
+```bash
 export sub=<YOUR_AZURE_SUBSCRIPTION_VALUE>
 
 for c in {1..1} ; do
@@ -605,7 +601,7 @@ done
 
 # 묶을 서버 추가오기 : worker node 
 
-```shell
+```bash
 export DIGITALOCEAN_SIZE="s-1vcpu-1gb"
 echo "### Creating worker nodes ..."
 for c in {1..1} ; do
@@ -625,7 +621,7 @@ done
 
 **manager1** 과 **worker1** 노드를 [docker swarm](https://docs.docker.com/engine/swarm/)를 활용하여 묶자. 
 
-```shell
+```bash
 # Get IP from leader node
 leader_ip=$(docker-machine ip manager1)
 
@@ -741,7 +737,7 @@ https://ian-says.com/articles/traefik-proxy-docker-lets-encrypt/
 
 # 2. [Traefik](https://traefik.io/) 용 network 만들기
 
-```shell
+```bash
 # Run in manager node
 eval $(docker-machine env manager1)
 
@@ -757,7 +753,7 @@ docker network create --driver=overlay traefik-net
 
 - 세부 설정이 담긴 **traefik.toml** 을 만든다.
 
-```shell
+```bash
 # For Let's Encrypt
 docker-machine ssh manager1 "DOMAINNAME=anpanman.co.kr && \ 
                              mkdir /home/js/opt && \ 
@@ -771,7 +767,7 @@ docker-machine ssh manager1 "DOMAINNAME=anpanman.co.kr && \
 
 # traefik.toml
 
-```shell
+```bash
 defaultEntryPoints = ["http", "https"]
 
 logLevel = "INFO"
@@ -812,7 +808,7 @@ onDemand = false
 
 # 4. Run [Traefik](https://traefik.io/)
 
-```shell
+```bash
 eval $(docker-machine env manager1)
 DOMAINNAME="anpanman.co.kr"
 
@@ -844,7 +840,7 @@ https://monitor.anpanman.co.kr 에서 `dashboard`를 볼 수 있다.
 
 [Traefik](https://traefik.io/) 를 적용하여 재실행하자. 
 
-```shell
+```bash
 docker service create \
     --name rshiny \
     --label traefik.shiny.port=3838 \
@@ -864,7 +860,7 @@ https://server.anpanman.co.kr 에서 `rstudio server`를, https://app.anpanman.c
 proxy server 프로그램인 [nginx](https://www.nginx.com/)의 [docker image](https://hub.docker.com/_/nginx/) 를 이용하였고, [blogdown 패키지](https://github.com/rstudio/blogdown) 를 활용해서 홈페이지를 만들었다. 
 
 
-```shell
+```bash
 docker service create \
     --name nginx \
     --label traefik.port=80 \
@@ -938,8 +934,8 @@ https://anpanman.co.kr, https://www.anpanman.co.kr 에서 [nginx](https://www.ng
 
 - 엑셀 파일로 바로 **다운로드** : `Buttons` 옵션
 
-<!--html_preserve--><div id="htmlwidget-69e1e9f7a23aed705c3b" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-69e1e9f7a23aed705c3b">{"x":{"filter":"none","extensions":["Buttons"],"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150"],[5.1,4.9,4.7,4.6,5,5.4,4.6,5,4.4,4.9,5.4,4.8,4.8,4.3,5.8,5.7,5.4,5.1,5.7,5.1,5.4,5.1,4.6,5.1,4.8,5,5,5.2,5.2,4.7,4.8,5.4,5.2,5.5,4.9,5,5.5,4.9,4.4,5.1,5,4.5,4.4,5,5.1,4.8,5.1,4.6,5.3,5,7,6.4,6.9,5.5,6.5,5.7,6.3,4.9,6.6,5.2,5,5.9,6,6.1,5.6,6.7,5.6,5.8,6.2,5.6,5.9,6.1,6.3,6.1,6.4,6.6,6.8,6.7,6,5.7,5.5,5.5,5.8,6,5.4,6,6.7,6.3,5.6,5.5,5.5,6.1,5.8,5,5.6,5.7,5.7,6.2,5.1,5.7,6.3,5.8,7.1,6.3,6.5,7.6,4.9,7.3,6.7,7.2,6.5,6.4,6.8,5.7,5.8,6.4,6.5,7.7,7.7,6,6.9,5.6,7.7,6.3,6.7,7.2,6.2,6.1,6.4,7.2,7.4,7.9,6.4,6.3,6.1,7.7,6.3,6.4,6,6.9,6.7,6.9,5.8,6.8,6.7,6.7,6.3,6.5,6.2,5.9],[3.5,3,3.2,3.1,3.6,3.9,3.4,3.4,2.9,3.1,3.7,3.4,3,3,4,4.4,3.9,3.5,3.8,3.8,3.4,3.7,3.6,3.3,3.4,3,3.4,3.5,3.4,3.2,3.1,3.4,4.1,4.2,3.1,3.2,3.5,3.6,3,3.4,3.5,2.3,3.2,3.5,3.8,3,3.8,3.2,3.7,3.3,3.2,3.2,3.1,2.3,2.8,2.8,3.3,2.4,2.9,2.7,2,3,2.2,2.9,2.9,3.1,3,2.7,2.2,2.5,3.2,2.8,2.5,2.8,2.9,3,2.8,3,2.9,2.6,2.4,2.4,2.7,2.7,3,3.4,3.1,2.3,3,2.5,2.6,3,2.6,2.3,2.7,3,2.9,2.9,2.5,2.8,3.3,2.7,3,2.9,3,3,2.5,2.9,2.5,3.6,3.2,2.7,3,2.5,2.8,3.2,3,3.8,2.6,2.2,3.2,2.8,2.8,2.7,3.3,3.2,2.8,3,2.8,3,2.8,3.8,2.8,2.8,2.6,3,3.4,3.1,3,3.1,3.1,3.1,2.7,3.2,3.3,3,2.5,3,3.4,3],[1.4,1.4,1.3,1.5,1.4,1.7,1.4,1.5,1.4,1.5,1.5,1.6,1.4,1.1,1.2,1.5,1.3,1.4,1.7,1.5,1.7,1.5,1,1.7,1.9,1.6,1.6,1.5,1.4,1.6,1.6,1.5,1.5,1.4,1.5,1.2,1.3,1.4,1.3,1.5,1.3,1.3,1.3,1.6,1.9,1.4,1.6,1.4,1.5,1.4,4.7,4.5,4.9,4,4.6,4.5,4.7,3.3,4.6,3.9,3.5,4.2,4,4.7,3.6,4.4,4.5,4.1,4.5,3.9,4.8,4,4.9,4.7,4.3,4.4,4.8,5,4.5,3.5,3.8,3.7,3.9,5.1,4.5,4.5,4.7,4.4,4.1,4,4.4,4.6,4,3.3,4.2,4.2,4.2,4.3,3,4.1,6,5.1,5.9,5.6,5.8,6.6,4.5,6.3,5.8,6.1,5.1,5.3,5.5,5,5.1,5.3,5.5,6.7,6.9,5,5.7,4.9,6.7,4.9,5.7,6,4.8,4.9,5.6,5.8,6.1,6.4,5.6,5.1,5.6,6.1,5.6,5.5,4.8,5.4,5.6,5.1,5.1,5.9,5.7,5.2,5,5.2,5.4,5.1],[0.2,0.2,0.2,0.2,0.2,0.4,0.3,0.2,0.2,0.1,0.2,0.2,0.1,0.1,0.2,0.4,0.4,0.3,0.3,0.3,0.2,0.4,0.2,0.5,0.2,0.2,0.4,0.2,0.2,0.2,0.2,0.4,0.1,0.2,0.2,0.2,0.2,0.1,0.2,0.2,0.3,0.3,0.2,0.6,0.4,0.3,0.2,0.2,0.2,0.2,1.4,1.5,1.5,1.3,1.5,1.3,1.6,1,1.3,1.4,1,1.5,1,1.4,1.3,1.4,1.5,1,1.5,1.1,1.8,1.3,1.5,1.2,1.3,1.4,1.4,1.7,1.5,1,1.1,1,1.2,1.6,1.5,1.6,1.5,1.3,1.3,1.3,1.2,1.4,1.2,1,1.3,1.2,1.3,1.3,1.1,1.3,2.5,1.9,2.1,1.8,2.2,2.1,1.7,1.8,1.8,2.5,2,1.9,2.1,2,2.4,2.3,1.8,2.2,2.3,1.5,2.3,2,2,1.8,2.1,1.8,1.8,1.8,2.1,1.6,1.9,2,2.2,1.5,1.4,2.3,2.4,1.8,1.8,2.1,2.4,2.3,1.9,2.3,2.5,2.3,1.9,2,2.3,1.8],["setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Sepal.Length<\/th>\n      <th>Sepal.Width<\/th>\n      <th>Petal.Length<\/th>\n      <th>Petal.Width<\/th>\n      <th>Species<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"<lf<rt>Bip>","lengthMenu":[[10,25,-1],["10","25","All"]],"pageLength":10,"buttons":["copy","print",{"extend":"collection","buttons":[{"extend":"csv","filename":"table"},{"extend":"excel","filename":"table"},{"extend":"pdf","filename":"table"}],"text":"Download"}],"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data) {\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':value == 'setosa' ? 'lightblue' : value == 'versicolor' ? 'lightgreen' : value == 'virginica' ? 'lightpink' : '','transform':'rotateX(45deg) rotateY(20deg) rotateZ(30deg)'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value <= 1 ? '' : 'linear-gradient(90deg, transparent ' + (6.9 - value)/5.9 * 100 + '%, steelblue ' + (6.9 - value)/5.9 * 100 + '%)','background-size':'100% 90%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'color':isNaN(parseFloat(value)) ? '' : value <= 3.4 ? 'white' : value <= 3.8 ? 'blue' : 'red','background-color':isNaN(parseFloat(value)) ? '' : value <= 3.4 ? 'gray' : 'yellow'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-weight':isNaN(parseFloat(value)) ? '' : value <= 5 ? 'normal' : 'bold'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-4d1f7c6289244fa3328e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4d1f7c6289244fa3328e">{"x":{"filter":"none","extensions":["Buttons"],"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150"],[5.1,4.9,4.7,4.6,5,5.4,4.6,5,4.4,4.9,5.4,4.8,4.8,4.3,5.8,5.7,5.4,5.1,5.7,5.1,5.4,5.1,4.6,5.1,4.8,5,5,5.2,5.2,4.7,4.8,5.4,5.2,5.5,4.9,5,5.5,4.9,4.4,5.1,5,4.5,4.4,5,5.1,4.8,5.1,4.6,5.3,5,7,6.4,6.9,5.5,6.5,5.7,6.3,4.9,6.6,5.2,5,5.9,6,6.1,5.6,6.7,5.6,5.8,6.2,5.6,5.9,6.1,6.3,6.1,6.4,6.6,6.8,6.7,6,5.7,5.5,5.5,5.8,6,5.4,6,6.7,6.3,5.6,5.5,5.5,6.1,5.8,5,5.6,5.7,5.7,6.2,5.1,5.7,6.3,5.8,7.1,6.3,6.5,7.6,4.9,7.3,6.7,7.2,6.5,6.4,6.8,5.7,5.8,6.4,6.5,7.7,7.7,6,6.9,5.6,7.7,6.3,6.7,7.2,6.2,6.1,6.4,7.2,7.4,7.9,6.4,6.3,6.1,7.7,6.3,6.4,6,6.9,6.7,6.9,5.8,6.8,6.7,6.7,6.3,6.5,6.2,5.9],[3.5,3,3.2,3.1,3.6,3.9,3.4,3.4,2.9,3.1,3.7,3.4,3,3,4,4.4,3.9,3.5,3.8,3.8,3.4,3.7,3.6,3.3,3.4,3,3.4,3.5,3.4,3.2,3.1,3.4,4.1,4.2,3.1,3.2,3.5,3.6,3,3.4,3.5,2.3,3.2,3.5,3.8,3,3.8,3.2,3.7,3.3,3.2,3.2,3.1,2.3,2.8,2.8,3.3,2.4,2.9,2.7,2,3,2.2,2.9,2.9,3.1,3,2.7,2.2,2.5,3.2,2.8,2.5,2.8,2.9,3,2.8,3,2.9,2.6,2.4,2.4,2.7,2.7,3,3.4,3.1,2.3,3,2.5,2.6,3,2.6,2.3,2.7,3,2.9,2.9,2.5,2.8,3.3,2.7,3,2.9,3,3,2.5,2.9,2.5,3.6,3.2,2.7,3,2.5,2.8,3.2,3,3.8,2.6,2.2,3.2,2.8,2.8,2.7,3.3,3.2,2.8,3,2.8,3,2.8,3.8,2.8,2.8,2.6,3,3.4,3.1,3,3.1,3.1,3.1,2.7,3.2,3.3,3,2.5,3,3.4,3],[1.4,1.4,1.3,1.5,1.4,1.7,1.4,1.5,1.4,1.5,1.5,1.6,1.4,1.1,1.2,1.5,1.3,1.4,1.7,1.5,1.7,1.5,1,1.7,1.9,1.6,1.6,1.5,1.4,1.6,1.6,1.5,1.5,1.4,1.5,1.2,1.3,1.4,1.3,1.5,1.3,1.3,1.3,1.6,1.9,1.4,1.6,1.4,1.5,1.4,4.7,4.5,4.9,4,4.6,4.5,4.7,3.3,4.6,3.9,3.5,4.2,4,4.7,3.6,4.4,4.5,4.1,4.5,3.9,4.8,4,4.9,4.7,4.3,4.4,4.8,5,4.5,3.5,3.8,3.7,3.9,5.1,4.5,4.5,4.7,4.4,4.1,4,4.4,4.6,4,3.3,4.2,4.2,4.2,4.3,3,4.1,6,5.1,5.9,5.6,5.8,6.6,4.5,6.3,5.8,6.1,5.1,5.3,5.5,5,5.1,5.3,5.5,6.7,6.9,5,5.7,4.9,6.7,4.9,5.7,6,4.8,4.9,5.6,5.8,6.1,6.4,5.6,5.1,5.6,6.1,5.6,5.5,4.8,5.4,5.6,5.1,5.1,5.9,5.7,5.2,5,5.2,5.4,5.1],[0.2,0.2,0.2,0.2,0.2,0.4,0.3,0.2,0.2,0.1,0.2,0.2,0.1,0.1,0.2,0.4,0.4,0.3,0.3,0.3,0.2,0.4,0.2,0.5,0.2,0.2,0.4,0.2,0.2,0.2,0.2,0.4,0.1,0.2,0.2,0.2,0.2,0.1,0.2,0.2,0.3,0.3,0.2,0.6,0.4,0.3,0.2,0.2,0.2,0.2,1.4,1.5,1.5,1.3,1.5,1.3,1.6,1,1.3,1.4,1,1.5,1,1.4,1.3,1.4,1.5,1,1.5,1.1,1.8,1.3,1.5,1.2,1.3,1.4,1.4,1.7,1.5,1,1.1,1,1.2,1.6,1.5,1.6,1.5,1.3,1.3,1.3,1.2,1.4,1.2,1,1.3,1.2,1.3,1.3,1.1,1.3,2.5,1.9,2.1,1.8,2.2,2.1,1.7,1.8,1.8,2.5,2,1.9,2.1,2,2.4,2.3,1.8,2.2,2.3,1.5,2.3,2,2,1.8,2.1,1.8,1.8,1.8,2.1,1.6,1.9,2,2.2,1.5,1.4,2.3,2.4,1.8,1.8,2.1,2.4,2.3,1.9,2.3,2.5,2.3,1.9,2,2.3,1.8],["setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","setosa","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","versicolor","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica","virginica"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Sepal.Length<\/th>\n      <th>Sepal.Width<\/th>\n      <th>Petal.Length<\/th>\n      <th>Petal.Width<\/th>\n      <th>Species<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"<lf<rt>Bip>","lengthMenu":[[10,25,-1],["10","25","All"]],"pageLength":10,"buttons":["copy","print",{"extend":"collection","buttons":[{"extend":"csv","filename":"table"},{"extend":"excel","filename":"table"},{"extend":"pdf","filename":"table"}],"text":"Download"}],"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data) {\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'background-color':value == 'setosa' ? 'lightblue' : value == 'versicolor' ? 'lightgreen' : value == 'virginica' ? 'lightpink' : '','transform':'rotateX(45deg) rotateY(20deg) rotateZ(30deg)'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'background':isNaN(parseFloat(value)) || value <= 1 ? '' : 'linear-gradient(90deg, transparent ' + (6.9 - value)/5.9 * 100 + '%, steelblue ' + (6.9 - value)/5.9 * 100 + '%)','background-size':'100% 90%','background-repeat':'no-repeat','background-position':'center'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'color':isNaN(parseFloat(value)) ? '' : value <= 3.4 ? 'white' : value <= 3.8 ? 'blue' : 'red','background-color':isNaN(parseFloat(value)) ? '' : value <= 3.4 ? 'gray' : 'yellow'});\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-weight':isNaN(parseFloat(value)) ? '' : value <= 5 ? 'normal' : 'bold'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script><!--/html_preserve-->
 
 
 #
@@ -1024,8 +1020,8 @@ model0 <- glm(case ~ induced + spontaneous, family=binomial, data=infert)
 logistic.display(model0, crude = T, crude.p.value = T)$table
 ```
 
-<!--html_preserve--><div id="htmlwidget-0b03b80def5c73ec7333" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0b03b80def5c73ec7333">{"x":{"filter":"none","caption":"<caption>\nLogistic regression predicting case \n<\/caption>","data":[["induced (cont. var.)","","spontaneous (cont. var.)",""],["1.05 (0.74,1.5) ","","2.9 (1.97,4.26) ",""],["0.788","","&lt; 0.001",""],["1.52 (1.02,2.27) ","","3.31 (2.19,5.01) ",""],["0.042","","&lt; 0.001",""],["0.042","","&lt; 0.001",""]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>crude OR(95%CI)<\/th>\n      <th>crude P value<\/th>\n      <th>adj. OR(95%CI)<\/th>\n      <th>P(Wald's test)<\/th>\n      <th>P(LR-test)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+<!--html_preserve--><div id="htmlwidget-234aed8dc624573e4f98" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-234aed8dc624573e4f98">{"x":{"filter":"none","caption":"<caption>\nLogistic regression predicting case \n<\/caption>","data":[["induced (cont. var.)","","spontaneous (cont. var.)",""],["1.05 (0.74,1.5) ","","2.9 (1.97,4.26) ",""],["0.788","","&lt; 0.001",""],["1.52 (1.02,2.27) ","","3.31 (2.19,5.01) ",""],["0.042","","&lt; 0.001",""],["0.042","","&lt; 0.001",""]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>crude OR(95%CI)<\/th>\n      <th>crude P value<\/th>\n      <th>adj. OR(95%CI)<\/th>\n      <th>P(Wald's test)<\/th>\n      <th>P(LR-test)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"dom":"t","order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
 
 ```
 ## Log-likelihood = -139.806
