@@ -3,18 +3,19 @@ title: "맞춤형 의학연구 애플리케이션을 위한 개발 환경 구축
 author: "Jinseob Kim"
 date: "October 26, 2018"
 output:
-  slidy_presentation:
-    theme: readable
-    highlight: tango
-    font_adjustment: +2
-    duration: 40
-    footer: "&copy;2018 ANPANMAN Co.,Ltd. All rights reserved."
-    fig_width: 7
-    fig_height: 6
-    fig_caption: true
+  slidy_presentation: 
     df_print: paged
-subtitle: ANPANMAN Co.,Ltd. 
-editor_options: 
+    duration: 40
+    fig_caption: yes
+    fig_height: 6
+    fig_width: 7
+    font_adjustment: 2
+    footer: '&copy;2018 ANPANMAN Co.,Ltd. All rights reserved.'
+    highlight: tango
+    keep_md: yes
+    theme: readable
+subtitle: ANPANMAN Co.,Ltd.
+editor_options:
   chunk_output_type: console
 ---
 
